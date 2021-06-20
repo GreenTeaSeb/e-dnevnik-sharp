@@ -54,7 +54,7 @@ const load_sidebar = async () => {
     // LOGO
     const i = document.getElementsByClassName("custom-logo")[0];
 
-    let icon = chrome.runtime.getURL("icons/icon.png");
+    let icon = chrome.runtime.getURL("icons/icon.svg");
     i.setAttribute('src', icon + " ")
     //CATEGORIES
 
