@@ -1,0 +1,137 @@
+
+#display{
+    margin-left: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    
+}
+#courses-list{
+    float: left;
+    width: auto;   
+    flex: 1;
+    min-width: 40rem;
+}
+
+#info{
+    margin: 5rem;
+}
+
+.course{
+    padding: 2rem;
+    animation: coursesload 0.2s ease-out, fadein 0.6s ease-out;
+    background-color: var(--primary-dark);
+    margin: 1rem;
+    border-radius: 0.5rem;
+    color: var(--text);
+    transition: 0.1s;
+    
+}
+
+
+.course span{
+    font-size: 1em;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+
+.active-course{
+    background-color: var(--primary);
+    border-right: 0.7rem solid var(--text-hightlight,#f7768e);
+    transition: 0.1s;
+}
+
+.course:hover{
+    background-color: var(--primary);
+    transition: 0.3s;
+}
+
+.final-grade{
+    color: var(--text-highlight);
+    margin-left: 10rem;
+    float: right;
+}
+
+.confirmed{
+    font-weight: bold;
+}
+
+.teacher{
+    margin-left: 2rem;
+}
+
+
+.grades-info{
+    margin-top: 1rem;
+    display: none;
+    width: 100%;
+
+}
+
+.active-grades{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.expand{
+    background-color: var(--primary-dark);
+    border-radius: 100%;
+    margin-top: 1rem;
+}
+
+.expand .fa-chevron-down{
+    padding: 0.5rem;
+    transition: 0.5s;
+}
+
+.expanded .expand .fa-chevron-down{
+    transform: rotateX(180deg);
+    transition: 0.5s;
+}
+
+
+
+
+
+.table{
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: scroll;
+    
+}
+
+.table-row{
+    display: flex;
+    width: 100%;
+}
+.table-row div{
+    padding: 1rem;
+    flex: 1 1 0px;
+    text-align: center;
+    background-color: var(--primary-dark);
+    border: 1px solid var(--primary);
+    border-radius: 0.5rem;
+    
+    font-size: 1em;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+.notes{
+    display: none;
+}
+
+@keyframes fadein {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes coursesload {
+    from {margin: 0  1rem 0 1rem;}
+    to {margin: 1rem ;}
+}

@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap');
+
+:root {
+    --background : #1a1b26;
+    --primary : #24283b;
+    --primary-hightlight:  #282c41;
+    --text-highlight: #f7768e;
+    --text: #cfc9c2;
+}
+
+
+*{
+    font-family: 'Roboto', sans-serif;
+}
+
+
+body{
+    background-image: url('https://images.unsplash.com/photo-1423683249427-8ca22bd873e0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1953&q=80') !important; 
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+}
+
+div,#page-wrapper{
+    background-color: var(--primary) !important;
+}
+
+input{
+    background-color: var(--background);
+    border: none !important;
+    color: var(--text-highlight) !important;
+}
+
+p,a,h4,span,label{
+    color: var(--text);
+}
