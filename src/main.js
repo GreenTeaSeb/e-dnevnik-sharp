@@ -22,8 +22,10 @@ const loading_screen = async () => {
 const loading_data = async () => {
     console.log("load data");
     /* courses */
+
     const courses = await fetch_page("https://ocjene.skole.hr/course");
     data.set("courses", courses)
+
     const list = courses.getElementsByClassName('list')[0].children
     /* grades of each course */
     for (const course of list) {
@@ -34,6 +36,11 @@ const loading_data = async () => {
     }
     console.log("loaded data");
     main_html();
+
+    /* courses */
+    const notes = await fetch_page("https://ocjene.skole.hr/notes");
+    data.set("notes", notes)
+    console.log(notes.body.innerHTML)
 }
 
 
@@ -159,7 +166,7 @@ const get_average_grade = async (id) => {
         }
         return final_grade[0].lastElementChild.innerHTML;
     } catch (error) {
-        return "unset"
+        return "nezaključano"
     }
 
 }
@@ -170,6 +177,7 @@ const display_average = async (subject_id) => {
 
     const grade = await get_average_grade(subject_id);
     const subject = document.getElementById(subject_id);
+    const notes = subject.lastElementChild.lastElementChild;
     const final_grade = subject.getElementsByClassName("final-grade")[0]
     final_grade.innerText = grade;
 
@@ -179,7 +187,7 @@ const display_average = async (subject_id) => {
         const num = Math.round(grade)
         average_grade = (grade_count_for_average * average_grade + num) / (grade_count_for_average + 1);
         grade_count_for_average += 1;
-    } else if (grade != 'unset') {
+    } else if (grade != 'nezaključano') {
         subject.classList.add('confirmed');
         const num = parseInt(grade.match(/\d+/)[0], 10)
         average_grade = (grade_count_for_average * average_grade + num) / (grade_count_for_average + 1);
@@ -203,14 +211,17 @@ const display_average = async (subject_id) => {
         
         if(!this.classList.contains('active-course')){
             this.classList.remove('expanded')
+            notes.style.display = "none";
             for (c of cur) {
                 c.style.display ="block"     
             }
+            setTimeout(function(){
+                subject.scrollIntoView({behavior: "smooth", block: "start", inline: "center"});
+            },100)
+            
         }
         this.lastElementChild.classList.toggle("active-grades");
-        setTimeout(function(){
-            subject.scrollIntoView({behavior: "smooth", block: "start", inline: "start"});
-        },100)
+        5
         
     })
 
@@ -218,7 +229,7 @@ const display_average = async (subject_id) => {
     expand_button.addEventListener("click", function (event) {
         event.stopPropagation()
         const cur = document.getElementsByClassName("course");
-        const notes = subject.lastElementChild.lastElementChild;
+        
 
         subject.classList.toggle('expanded');
         
@@ -234,11 +245,10 @@ const display_average = async (subject_id) => {
             for (c of cur) {
                 c.style.display ="block"
                 notes.style.display = "none"
+                subject.scrollIntoView({behavior: "smooth", block: "start", inline: "start"});
             }
-        
-            setTimeout(function(){
-                subject.scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
-            },100)
+    
+           
     })
 
 }
@@ -253,8 +263,6 @@ const load_grades = (course) => {
     const notes_table = original.getElementsByClassName("notes-table");
     if (original_table.length > 0) {
         const rows = original_table[0].children
-        
-    
         for (const row of rows) {
             if (row.className == "flex-table row") {
                 const flexrow = document.createElement('div')
@@ -277,6 +285,28 @@ const load_grades = (course) => {
                         row_cells.appendChild(cell_t)
                     }
                 }
+            }
+        }
+    }
+
+    if(notes_table.length > 0){
+        const rows = notes_table[0].children
+        for (const row of rows) {
+            
+            if (row.classList.contains("row")) {
+                const row_cells = document.createElement('div')
+                row_cells.className = "table-row"
+                notes.appendChild(row_cells)
+
+                for (const cell of row.children) {
+                    const cell_t = document.createElement('div');                
+                        if(cell.children.length > 0){
+                            cell_t.innerHTML = cell.innerHTML
+                        } 
+                        row_cells.appendChild(cell_t)
+                    
+                }
+            
             }
         }
     }

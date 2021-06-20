@@ -32,14 +32,17 @@
 .course span{
     font-size: 1em;
     font-family: 'Roboto', sans-serif;
+
 }
-
-
 
 .active-course{
     background-color: var(--primary);
     border-right: 0.7rem solid var(--text-hightlight,#f7768e);
     transition: 0.1s;
+
+    animation: coursesload 0.2s ease-out, fadein 0.6s ease-out;
+
+    
 }
 
 .course:hover{
@@ -54,7 +57,7 @@
 }
 
 .confirmed{
-    font-weight: bold;
+    font-weight: bolder;
 }
 
 .teacher{
@@ -63,16 +66,17 @@
 
 
 .grades-info{
-    margin-top: 1rem;
+    margin-top:  1rem;
     display: none;
     width: 100%;
-
+    animation: scalein 0.2s ease-out;
 }
 
 .active-grades{
     display: flex;
     flex-direction: column;
     align-items: center;
+    animation: scalein 0.2s ease-out;
 }
 
 
@@ -103,6 +107,7 @@
     justify-content: center;
     overflow: scroll;
     
+  
 }
 
 .table-row{
@@ -124,11 +129,29 @@
 
 .notes{
     display: none;
+    width: 100%;
+    animation: scalein 0.1s ease-out;
+
 }
 
 @keyframes fadein {
-    from {opacity: 0;}
-    to {opacity: 1;}
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scalein {
+    from {
+        
+        transform:scaleY(0);
+    }
+    to {
+       
+        transform:scaleY(1);
+    }
 }
 
 @keyframes coursesload {
