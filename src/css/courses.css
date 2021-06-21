@@ -1,15 +1,19 @@
 
 #display{
-    margin-left: 2rem;
+    margin: 2rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     
 }
-#courses-list{
+.content-list{
     float: left;
     width: auto;   
     flex: 1;
+    
+}
+
+#courses-list{
     min-width: 40rem;
 }
 
@@ -31,7 +35,6 @@
 
 .course span{
     font-size: 1em;
-    font-family: 'Roboto', sans-serif;
 
 }
 
@@ -123,7 +126,6 @@
     border-radius: 0.5rem;
     
     font-size: 1em;
-    font-family: 'Roboto', sans-serif;
 }
 
 

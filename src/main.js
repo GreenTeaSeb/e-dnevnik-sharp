@@ -9,6 +9,8 @@ window.onload = () => {
 let data = new Map();
 let grade_count_for_average = 0;
 let average_grade = 0;
+let page_end = document.location.href.substr(document.location.href.lastIndexOf('/') + 1)
+let username_data = "Unkown";
 
 const loading_screen = async () => {
     const response = await fetch(chrome.runtime.getURL("html/loading.html"));
@@ -27,6 +29,7 @@ const loading_data = async () => {
     data.set("courses", courses)
 
     const list = courses.getElementsByClassName('list')[0].children
+    username_data = courses.getElementsByClassName("user-name")[0].firstElementChild.innerText;
     /* grades of each course */
     for (const course of list) {
         const name = course.firstElementChild.firstElementChild.innerText;
@@ -60,7 +63,8 @@ const main_html = async () => {
 const load_sidebar = async () => {
     // LOGO
     const i = document.getElementsByClassName("custom-logo")[0];
-
+    const username = document.getElementById("username");
+    username.firstElementChild.innerText = username_data;
     let icon = chrome.runtime.getURL("icons/icon.svg");
     i.setAttribute('src', icon + " ")
     //CATEGORIES
@@ -87,8 +91,17 @@ const load_sidebar = async () => {
 }
 
 const search = () => {
-
-    const list = document.getElementsByClassName("course")
+    let list = document.getElementsByClassName("course");
+    switch (page_end) {
+        case "course":
+            list = document.getElementsByClassName("course")
+            break;
+        case "notes":
+            list = document.getElementsByClassName("section-text")
+        default:
+            break;
+    }
+    
     const search_term = document.getElementById('search-input').value.toUpperCase();
 
     for (course of list) {
@@ -102,8 +115,8 @@ const search = () => {
 
 const set_active = () => {
     const url = document.location.href
-    const page = url.substr(url.lastIndexOf('/') + 1)
-    const id = document.getElementById(page);
+    page_end = url.substr(url.lastIndexOf('/') + 1)
+    const id = document.getElementById(page_end );
     if (id)
         id.classList.add("active")
     else {
@@ -113,9 +126,13 @@ const set_active = () => {
 
 
 const set_content = async (page) => {
+    page_end = page;
     switch (page) {
         case "course":
             get_courses();
+            break;
+        case "notes":
+            get_notes();
             break;
         case "logout":
             document.location.href = "/logout"
@@ -166,7 +183,7 @@ const get_average_grade = async (id) => {
         }
         return final_grade[0].lastElementChild.innerHTML;
     } catch (error) {
-        return "nezaključano"
+        return "nezaključeno"
     }
 
 }
@@ -187,7 +204,7 @@ const display_average = async (subject_id) => {
         const num = Math.round(grade)
         average_grade = (grade_count_for_average * average_grade + num) / (grade_count_for_average + 1);
         grade_count_for_average += 1;
-    } else if (grade != 'nezaključano') {
+    } else if (grade != 'nezaključeno') {
         subject.classList.add('confirmed');
         const num = parseInt(grade.match(/\d+/)[0], 10)
         average_grade = (grade_count_for_average * average_grade + num) / (grade_count_for_average + 1);
@@ -205,6 +222,7 @@ const display_average = async (subject_id) => {
                 c.lastElementChild.classList.remove("active-grades");
             }
             else {
+               
             }
         }
         this.classList.toggle("active-course")
@@ -215,13 +233,15 @@ const display_average = async (subject_id) => {
             for (c of cur) {
                 c.style.display ="block"     
             }
-            setTimeout(function(){
-                subject.scrollIntoView({behavior: "smooth", block: "start", inline: "center"});
-            },100)
             
+            
+        }else{
+            setTimeout(function(){
+                subject.scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
+            },0)
         }
         this.lastElementChild.classList.toggle("active-grades");
-        5
+        
         
     })
 
@@ -359,4 +379,11 @@ const get_courses = async () => {
         display_average(new_course.id)
     }
 
+}
+
+const get_notes = async()=> {
+    const display = document.getElementById("display");
+    const orignal = data.get("notes");
+
+    display.innerHTML = orignal.getElementsByClassName("content-wrapper")[0].innerHTML;
 }

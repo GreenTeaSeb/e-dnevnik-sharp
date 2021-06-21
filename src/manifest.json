@@ -1,17 +1,17 @@
 {
 
     "manifest_version": 2,
-    "name": "e-dnevnik ++",
+    "name": "e-dnevnik sharp",
     "version": "1.0",
   
-    "description": "Better e-dnevnik +",
+    "description": "Bolji e-dnevnik",
     
 
     "content_scripts": [
         {
             "matches": ["*://ocjene.skole.hr/*"],
             "js": ["./main.js"],
-            "css": ["./css/sidebar.css","./css/courses.css"],
+            "css": ["./css/sidebar.css","./css/courses.css","./css/notes.css"],
             "run_at": "document_start",
             "exclude_matches": [
                 "*://ocjene.skole.hr/login"

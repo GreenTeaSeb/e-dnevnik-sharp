@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;1,400&display=swap');
 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
 :root {
@@ -17,6 +17,9 @@
     --text: #cfc9c2;
 }
 
+*{
+    font-family: 'Roboto', sans-serif;
+}
 
 body{
     background-color: var(--background,#1a1b26) !important;
@@ -33,7 +36,6 @@ span {
 }
 #loading-text{
     color: var(--text);
-    font-family: 'Roboto', sans-serif;
     font-size: 5rem;
     animation: fadein 0.5s;
 }
@@ -98,17 +100,19 @@ span {
     
 }
 
-.category a{
-    display: block;
+.category a, .content a{
     color: var( --text, #cfc9c2);
-    font-family: 'Roboto', sans-serif;
     font-size: 0.9rem;
     text-decoration: none;
     transition: 0.3s;
 }
 
+.category a{
+    display: block;
+}
+
 .category {
-    padding: 2rem 0 2rem 0;
+    padding: 1.8rem 0 1.8rem 0;
     transition: 0.1s;
     border-radius: 0px 0.2rem 0.2rem 0px;
     animation: categoryload 0.5s ease-out;
@@ -130,7 +134,8 @@ span {
 }
 
 
-.active{
+
+.active, .category:active{
     background-color:var(--primary-light, #282c41);
     border-right: 0.5rem solid var(--text-hightlight,#f7768e);
     transition: 0.3s;
@@ -139,7 +144,7 @@ span {
 .active a{
     color:var(--text-hightlight,#f7768e);
     transition: 0.3s;
-    font-size: 1.1em;
+    font-size: 1rem;
 
 }
 
@@ -174,7 +179,7 @@ span {
     background-color: var(--background);
     display: flex;
     align-items: center;
-    justify-content: center;
+
 }
 
 #search-bar{
@@ -185,7 +190,7 @@ span {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+    margin-left: auto;
 }
 
 #search-bar:focus-within .fa-search{
@@ -202,7 +207,6 @@ span {
     width: 100%;
     color: var(--text);
     padding: 0px 20px 0px 20px;
-    font-family: 'Roboto', sans-serif;
     font-size: 1em;
     transition: 0.2s;
 }
@@ -220,6 +224,40 @@ span {
     transition: 0.2s;   
 }
 
+.fa-user{
+   margin-right: 1rem;
+}
+
+#user{
+    margin: 0.5rem 2rem  0.5rem auto;
+
+    padding: 1rem 2rem 1rem 2rem;
+    order: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--text);
+    background-color: var(--primary-dark);
+    border-radius: 10px;
+
+    transition: 0.3s;
+}
+
+#user:hover{
+    background-color: var(--primary);
+    transition: 0.3s;
+}
+
+#user:active{
+    color: var(--text-highlight);
+}
+
+#username{
+    text-align: center;
+}
+
 
 
 @keyframes fadein {
@@ -229,5 +267,5 @@ span {
 
 @keyframes categoryload {
     from {padding: 0 0 0 0;}
-    to {padding: 2rem 0 2rem 0;}
+    to {padding: 1.8rem 0 1.8rem 0;}
 }
