@@ -387,3 +387,6 @@ const get_notes = async()=> {
 
     display.innerHTML = orignal.getElementsByClassName("content-wrapper")[0].innerHTML;
 }
+
+
+

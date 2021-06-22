@@ -104,13 +104,12 @@
 
 
 .table{
-    padding: 2rem;
+    padding: 2rem 1rem 2rem 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     overflow: scroll;
     
-  
 }
 
 .table-row{
@@ -134,29 +133,4 @@
     width: 100%;
     animation: scalein 0.1s ease-out;
 
-}
-
-@keyframes fadein {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes scalein {
-    from {
-        
-        transform:scaleY(0);
-    }
-    to {
-       
-        transform:scaleY(1);
-    }
-}
-
-@keyframes coursesload {
-    from {margin: 0  1rem 0 1rem;}
-    to {margin: 1rem ;}
 }

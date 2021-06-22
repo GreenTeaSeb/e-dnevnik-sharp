@@ -11,7 +11,7 @@
         {
             "matches": ["*://ocjene.skole.hr/*"],
             "js": ["./main.js"],
-            "css": ["./css/sidebar.css","./css/courses.css","./css/notes.css"],
+            "css": ["./css/sidebar.css","./css/courses.css","./css/notes.css","./css/animations_effects.css"],
             "run_at": "document_start",
             "exclude_matches": [
                 "*://ocjene.skole.hr/login"
