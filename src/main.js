@@ -1,6 +1,5 @@
+
 document.getElementsByTagName("html")[0].style.display = "none";
-
-
 
 window.onload = () => {
     loading_screen()
@@ -11,6 +10,7 @@ let grade_count_for_average = 0;
 let average_grade = 0;
 let page_end = document.location.href.substr(document.location.href.lastIndexOf('/') + 1)
 let username_data = "Unkown";
+
 
 const loading_screen = async () => {
     const response = await fetch(chrome.runtime.getURL("html/loading.html"));
@@ -37,13 +37,22 @@ const loading_data = async () => {
         const grades_page = await fetch_page(link_to_grades);
         data.set(name, grades_page);
     }
-    console.log("loaded data");
-    main_html();
+
+
 
     /* courses */
     const notes = await fetch_page("https://ocjene.skole.hr/notes");
-    data.set("notes", notes)
-    console.log(notes.body.innerHTML)
+    data.set("notes", notes);
+
+    /* schedule */
+    const schedule = await fetch_page("https://ocjene.skole.hr/schedule");
+    data.set("schedule", schedule);
+
+
+
+    console.log("loaded data");
+
+    main_html();
 }
 
 
@@ -91,20 +100,28 @@ const load_sidebar = async () => {
 }
 
 const search = () => {
-    let list = document.getElementsByClassName("course");
     switch (page_end) {
         case "course":
-            list = document.getElementsByClassName("course")
+            hide_and_search(document.getElementsByClassName("course"));
             break;
         case "notes":
-            list = document.getElementsByClassName("section-text")
+            hide_and_search(document.getElementsByClassName("section-text"));
+            break;
+        case "schedule":
+            highlight_and_search(document.getElementsByClassName('table-cell'));
+            break;
         default:
             break;
     }
-    
+
+
+}
+
+const hide_and_search = (list) => {
     const search_term = document.getElementById('search-input').value.toUpperCase();
 
     for (course of list) {
+
         if (course.innerText.toUpperCase().indexOf(search_term) > -1) {
             course.style.display = "";
         } else
@@ -112,11 +129,24 @@ const search = () => {
     }
 }
 
+const highlight_and_search = (list) => {
+    const search_term = document.getElementById('search-input').value.toUpperCase();
+
+    for (course of list) {
+        if (course.innerText.toUpperCase().indexOf(search_term) > -1) {
+            course.classList.add("active-cell")
+        } else
+            course.classList.remove("active-cell")
+
+        if (search_term == "")
+            course.classList.remove("active-cell")
+    }
+}
 
 const set_active = () => {
     const url = document.location.href
     page_end = url.substr(url.lastIndexOf('/') + 1)
-    const id = document.getElementById(page_end );
+    const id = document.getElementById(page_end);
     if (id)
         id.classList.add("active")
     else {
@@ -133,6 +163,9 @@ const set_content = async (page) => {
             break;
         case "notes":
             get_notes();
+            break;
+        case "schedule":
+            load_schedule();
             break;
         case "logout":
             document.location.href = "/logout"
@@ -215,60 +248,61 @@ const display_average = async (subject_id) => {
 
     subject.addEventListener("click", function (event) {
         event.stopPropagation();
-        const cur = document.getElementsByClassName("course");
-        for (c of cur) {
-            if (c.id != subject_id) {
-                c.classList.remove('active-course')
-                c.lastElementChild.classList.remove("active-grades");
-            }
-            else {
-               
-            }
-        }
-        this.classList.toggle("active-course")
-        
-        if(!this.classList.contains('active-course')){
-            this.classList.remove('expanded')
-            notes.style.display = "none";
+        if (event.target.className) {
+            const cur = document.getElementsByClassName("course");
             for (c of cur) {
-                c.style.display ="block"     
+                if (c.id != subject_id) {
+                    c.classList.remove('active-course')
+                    c.lastElementChild.classList.remove("active-grades");
+                }
+                else {
+
+                }
             }
-            
-            
-        }else{
-            setTimeout(function(){
-                subject.scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
-            },0)
+            this.classList.toggle("active-course")
+
+            if (!this.classList.contains('active-course')) {
+                this.classList.remove('expanded')
+                notes.style.display = "none";
+                for (c of cur) {
+                    c.style.display = "block"
+                }
+
+
+            } else {
+                setTimeout(function () {
+                    subject.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+                }, 0)
+            }
+            this.lastElementChild.classList.toggle("active-grades");
+
         }
-        this.lastElementChild.classList.toggle("active-grades");
-        
-        
     })
 
     const expand_button = subject.lastElementChild.children[1];
     expand_button.addEventListener("click", function (event) {
         event.stopPropagation()
         const cur = document.getElementsByClassName("course");
-        
+
 
         subject.classList.toggle('expanded');
-        
 
-        if(subject.classList.contains('expanded'))
+
+        if (subject.classList.contains('expanded'))
             for (c of cur) {
                 if (c.id != subject_id) {
-                    c.style.display ="none"
+                    c.style.display = "none"
                     notes.style.display = "block"
                 }
             }
         else
             for (c of cur) {
-                c.style.display ="block"
+                c.style.display = "block"
                 notes.style.display = "none"
-                subject.scrollIntoView({behavior: "smooth", block: "start", inline: "start"});
+                subject.scrollIntoView({ behavior: "smooth", block: "start", inline: "start" });
             }
-    
-           
+
+
     })
 
 }
@@ -278,7 +312,7 @@ const load_grades = (course) => {
     const table = course.lastElementChild.firstElementChild;
     const notes = course.lastElementChild.lastElementChild;
     const original = data.get(course.id)
- 
+
     const original_table = original.getElementsByClassName("grades-table");
     const notes_table = original.getElementsByClassName("notes-table");
     if (original_table.length > 0) {
@@ -294,14 +328,14 @@ const load_grades = (course) => {
                 flexrow.appendChild(row_name)
                 table.appendChild(flexrow);
                 table.appendChild(row_cells);
-                
+
                 for (const cell of row.children) {
                     if (cell.classList.contains("grade")) {
-                        const cell_t = document.createElement('div');                
-                        if(cell.children.length > 0){
-                           cell_t.innerHTML = cell.children[0].innerHTML
+                        const cell_t = document.createElement('div');
+                        if (cell.children.length > 0) {
+                            cell_t.innerHTML = cell.children[0].innerHTML
                         }
-                        
+
                         row_cells.appendChild(cell_t)
                     }
                 }
@@ -309,24 +343,24 @@ const load_grades = (course) => {
         }
     }
 
-    if(notes_table.length > 0){
+    if (notes_table.length > 0) {
         const rows = notes_table[0].children
         for (const row of rows) {
-            
+
             if (row.classList.contains("row")) {
                 const row_cells = document.createElement('div')
                 row_cells.className = "table-row"
                 notes.appendChild(row_cells)
 
                 for (const cell of row.children) {
-                    const cell_t = document.createElement('div');                
-                        if(cell.children.length > 0){
-                            cell_t.innerHTML = cell.innerHTML
-                        } 
-                        row_cells.appendChild(cell_t)
-                    
+                    const cell_t = document.createElement('div');
+                    if (cell.children.length > 0) {
+                        cell_t.innerHTML = cell.innerHTML
+                    }
+                    row_cells.appendChild(cell_t)
+
                 }
-            
+
             }
         }
     }
@@ -374,14 +408,14 @@ const get_courses = async () => {
         load_grades(new_course);
         courses_list.appendChild(new_course)
 
-        
+
 
         display_average(new_course.id)
     }
 
 }
 
-const get_notes = async()=> {
+const get_notes = async () => {
     const display = document.getElementById("display");
     const orignal = data.get("notes");
 
@@ -390,3 +424,117 @@ const get_notes = async()=> {
 
 
 
+const load_schedule = () => {
+
+    const display = document.getElementById('display')
+    display.innerHTML = '';
+    let schedule_n = 0;
+
+
+    const table = document.createElement("div");
+    table.classList.add("table");
+    table.classList.add("schedule");
+    const original = data.get("schedule")
+    const schedules = original.getElementsByClassName("schedule-table");
+    const button_row = document.createElement('div')
+    button_row.classList.add("button-row")
+
+    const display_schedule = () => {
+        table.innerHTML = "";
+        const first_schedule = schedules[schedule_n];
+        const rows_list = [];
+
+        //getting the number of rows:
+        const header_row = document.createElement("div");
+        header_row.classList.add('table-row');
+        rows_list.push(header_row);
+
+        for (const rows of first_schedule.firstElementChild.lastElementChild.children) {
+            const row = document.createElement("div");
+            row.classList.add('table-row');
+            const text = document.createElement("div");
+            text.innerText = rows.lastElementChild.innerText
+            // row.appendChild(text);
+            rows_list.push(row)
+        }
+
+        // subjects
+        for (let i = 0; i < rows_list.length; i++) {
+            // 0th row
+            for (const val of first_schedule.children) {
+                const table_rows = val.children;
+
+                if (table_rows.length > 2) {
+                    const text = document.createElement('div');
+
+                    text.innerText = table_rows[i].lastElementChild.innerText
+
+                    let brs = text.getElementsByTagName("br");
+                    while (brs.length > 0) {
+                        for (const br of brs)
+                            br.remove()
+                    }
+                    if (table_rows[i].classList.contains('header')) {
+                        text.classList.add('table-header')
+                    } else {
+                        text.classList.add('table-cell')
+                    }
+                    text.classList.add('unselectable')
+                    rows_list[i].appendChild(text);
+
+                } else {
+                    /*
+                    const text = document.createElement('div');
+                    if (table_rows[i]) {
+                        
+                        if (table_rows[i].children.length < 2) { // header
+                            text.innerText = table_rows[i].innerText
+    
+                        } else {
+                            for (const row of table_rows[i].children) {
+                                text.innerText = row.innerText;
+                            }
+                        }
+                        
+                    }
+                    rows_list[i].appendChild(text);
+                    */
+                }
+
+            }
+
+            table.appendChild(rows_list[i])
+        }
+        search();
+    }
+
+
+    for (let i = 0; i < schedules.length; i++) {
+        const button = document.createElement('div');
+        button.innerText = i + 1;
+        button.classList.add('table-selector')
+        button.classList.add('unselectable')
+        if (i == 0)
+            button.classList.add('selected-table')
+        button_row.appendChild(button)
+
+        button.addEventListener('click', () => {
+            const cur = document.getElementsByClassName("selected-table");
+            if (!button.classList.contains("selected-table")) {
+                if (cur.length > 0)
+                    cur[0].classList.remove('selected-table')
+                button.classList.add('selected-table');
+                schedule_n = i;
+                display_schedule();
+            }
+        });
+    }
+
+    display.appendChild(button_row)
+    display_schedule();
+
+    
+    display.appendChild(table)
+
+
+}

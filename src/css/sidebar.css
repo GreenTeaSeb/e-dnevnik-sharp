@@ -41,7 +41,7 @@ span {
 }
 
 #content{
-    margin-left: 15rem;
+    margin-left: 15.5rem;
     color: var(--text,#cfc9c2);
 }
 
@@ -137,7 +137,7 @@ span {
 
 .active, .category:active{
     background-color:var(--primary-light, #282c41);
-    border-right: 0.5rem solid var(--text-hightlight,#f7768e);
+    border-left: 0.5rem solid var(--text-highlight,#f7768e);
     transition: 0.3s;
     
 }

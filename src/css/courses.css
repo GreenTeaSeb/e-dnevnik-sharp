@@ -40,7 +40,7 @@
 
 .active-course{
     background-color: var(--primary);
-    border-right: 0.7rem solid var(--text-hightlight,#f7768e);
+    border-right: 0.7rem solid var(--text-highlight,#f7768e);
     transition: 0.1s;
 
     animation: coursesload 0.2s ease-out, fadein 0.6s ease-out;
@@ -123,10 +123,21 @@
     background-color: var(--primary-dark);
     border: 1px solid var(--primary);
     border-radius: 0.5rem;
-    
+    min-width: 0px;
+    overflow: hidden;
+    word-wrap: break-word;
     font-size: 1em;
 }
 
+.table-header {
+    color: var(--text-highlight) !important;
+    background-color: var(--primary) !important;
+    text-transform: uppercase;
+}
+
+.active-cell{
+    background-color: var(--primary-light) !important;
+}
 
 .notes{
     display: none;
@@ -134,3 +145,4 @@
     animation: scalein 0.1s ease-out;
 
 }
+
