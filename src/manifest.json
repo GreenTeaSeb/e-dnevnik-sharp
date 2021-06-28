@@ -26,6 +26,8 @@
     ],
     "web_accessible_resources": [
         "./icons/icon.png",
+        "./icons/icon.svg",
+        "./icons/icon2.svg",
         "./html/courses.html",
         "./html/mainpage.html",
         "./html/loading.html",

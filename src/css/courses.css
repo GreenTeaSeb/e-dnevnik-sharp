@@ -135,9 +135,6 @@
     text-transform: uppercase;
 }
 
-.active-cell{
-    background-color: var(--primary-light) !important;
-}
 
 .notes{
     display: none;
