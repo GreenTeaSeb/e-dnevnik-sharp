@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;1,400&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;1,400&display=swap');*/
+
 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
 :root {
@@ -17,14 +18,15 @@
     --text: #cfc9c2;
 }
 
+
 *{
     font-family: 'Roboto', sans-serif;
 }
 
 body{
     background-color: var(--background,#1a1b26) !important;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
 }
 
 span {
@@ -33,10 +35,19 @@ span {
 
 #loading-page{
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+#loading-page .custom-logo{
+    width: 30%;
+    object-fit: contain;
+}
+
 #loading-text{
     color: var(--text);
-    font-size: 5rem;
+    font-size: 2rem;
     animation: fadein 0.5s;
 }
 

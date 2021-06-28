@@ -13,9 +13,15 @@ let username_data = "Unkown";
 
 
 const loading_screen = async () => {
-    const response = await fetch(chrome.runtime.getURL("html/loading.html"));
-    const html = await response.text();
+    
+    const response = await fetch(browser.runtime.getURL("html/loading.html"));
+    const html = await response.text(); 
     document.body.innerHTML = html;
+    
+    const i = document.getElementsByClassName("custom-logo")[0];
+    let icon = browser.runtime.getURL("icons/icon2.svg");
+    i.setAttribute('src', icon + " ")
+
     document.getElementsByTagName("html")[0].style.display = "block";
     loading_data();
     console.log("loading screen");
@@ -59,12 +65,18 @@ const loading_data = async () => {
 
 const main_html = async () => {
     console.log("loading main");
-    const response = await fetch(chrome.runtime.getURL("html/mainpage.html"));
+    const response = await fetch(browser.runtime.getURL("html/mainpage.html"));
     const html = await response.text();
-    document.body.innerHTML = html;
+    const parsed = new DOMParser().parseFromString(html, 'text/html');
+
+    document.head.innerHTML = parsed.head.innerHTML
+    document.body.innerHTML = parsed.body.innerHTML;
+
+
     load_sidebar();
     console.log("loaded main");
     document.getElementsByTagName("html")[0].style.display = "block";
+   
 
 }
 
@@ -74,7 +86,7 @@ const load_sidebar = async () => {
     const i = document.getElementsByClassName("custom-logo")[0];
     const username = document.getElementById("username");
     username.firstElementChild.innerText = username_data;
-    let icon = chrome.runtime.getURL("icons/icon2.svg");
+    let icon = browser.runtime.getURL("icons/icon2.svg");
     i.setAttribute('src', icon + " ")
     //CATEGORIES
 
