@@ -59,7 +59,7 @@
     float: right;
 }
 
-.confirmed{
+.confirmed .final-grade{
     font-weight: bolder;
 }
 
@@ -127,6 +127,7 @@
     overflow: hidden;
     word-wrap: break-word;
     font-size: 1em;
+    font-weight: normal;
 }
 
 .table-header {

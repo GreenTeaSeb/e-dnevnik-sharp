@@ -1,4 +1,7 @@
+/*
+TODO: login screen, switch html head at login as well
 
+*/
 document.getElementsByTagName("html")[0].style.display = "none";
 
 window.onload = () => {
@@ -21,6 +24,11 @@ const loading_screen = async () => {
     const i = document.getElementsByClassName("custom-logo")[0];
     let icon = browser.runtime.getURL("icons/icon2.svg");
     i.setAttribute('src', icon + " ")
+
+    const tab_icon = document.createElement("link");
+    tab_icon.rel = "shortcut icon"
+    tab_icon.href = browser.runtime.getURL("icons/icon32.png");
+    document.head.appendChild(tab_icon)
 
     document.getElementsByTagName("html")[0].style.display = "block";
     loading_data();
@@ -72,6 +80,7 @@ const main_html = async () => {
     document.head.innerHTML = parsed.head.innerHTML
     document.body.innerHTML = parsed.body.innerHTML;
 
+    
 
     load_sidebar();
     console.log("loaded main");
