@@ -2,6 +2,7 @@
 TODO: login screen, switch html head at login as well
 
 */
+
 document.getElementsByTagName("html")[0].style.display = "none";
 
 window.onload = () => {
@@ -61,6 +62,10 @@ const loading_data = async () => {
     /* schedule */
     const schedule = await fetch_page("https://ocjene.skole.hr/schedule");
     data.set("schedule", schedule);
+
+    /* classes */
+    const classes = await fetch_page("https://ocjene.skole.hr/class");
+    data.set("classes", classes);
 
 
 
@@ -187,6 +192,9 @@ const set_content = async (page) => {
             break;
         case "schedule":
             load_schedule();
+            break;
+        case "class":
+            load_class();
             break;
         case "logout":
             document.location.href = "/logout"
@@ -444,7 +452,6 @@ const get_notes = async () => {
 }
 
 
-
 const load_schedule = () => {
 
     const display = document.getElementById('display')
@@ -558,4 +565,23 @@ const load_schedule = () => {
     display.appendChild(table)
 
 
+}
+
+const load_class = () =>{
+    const display = document.getElementById("display");
+    const orignal = data.get("classes");
+    display.innerHTML = "";
+    display.appendChild(document.createElement("div"))
+    display.firstElementChild.setAttribute('id','classes-container')
+    for(const class_info of orignal.getElementsByClassName('class-info')){
+        const class_template = document.querySelector('#class-template').content.cloneNode(true);
+        class_template.firstElementChild.firstElementChild.href = class_info.firstElementChild.href
+        class_template.firstElementChild.firstElementChild.innerText = class_info.firstElementChild.firstElementChild.innerText +  class_info.firstElementChild.lastElementChild.innerText
+        class_template.firstElementChild.lastElementChild.lastElementChild.innerText = class_info.getElementsByClassName("overall-grade")[0].lastElementChild.innerText
+        
+        for(const link of class_template.querySelector('.shortcuts').children){
+            link.firstElementChild.href = class_info.firstElementChild.href.substr(0,class_info.firstElementChild.href.lastIndexOf('/')) + link.firstElementChild.href.substr(link.firstElementChild.href.lastIndexOf('/'))
+        }
+        display.firstElementChild.appendChild(class_template)
+    }
 }

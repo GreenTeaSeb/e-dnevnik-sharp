@@ -24,6 +24,38 @@
    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/fontawesome.css"
       integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous">
 
+   <template id='class-template'>
+      <div class=" class-year">
+         <a href="" class="unselectable class-name">
+         </a>
+         <ul class="shortcuts">
+            <li>
+               <a class="unselectable" href="/course">OCJENE<i class="icon-star-empty"></i></a>
+            </li>
+            <li>
+               <a class="unselectable" href="/notes">BILJEŠKE<i class="icon-edit"></i></a>
+            </li>
+            <li>
+               <a class="unselectable" href="/exam">ISPITI<i class="icon-clone"></i></a>
+            </li>
+            <li>
+               <a class="unselectable" href="/absent" >IZOSTANCI<i class="icon-unlink"></i></a>
+            </li>
+            <li>
+               <a class="unselectable" href="/behavior"> VLADANJA<i class="icon-attention-circled"></i></a>
+            </li>
+            <li>
+               <a class="unselectable" href="/schedule">RASPORED<i class="icon-calendar"></i></a>
+            </li>
+         </ul>
+         <li class="class-grade unselectable"><i class="icon-graduation-cap"></i>OPĆI USPJEH
+            <span class="unselectable">
+              ?
+            </span>
+         </li>
+      </div>
+   </template>
+
 </head>
 
 <body>
@@ -41,7 +73,7 @@
                      class="icon-attention-circled"></i></a></li>
             <li class="category raspored" id="schedule"><a class="unselectable">RASPORED<i
                      class="icon-calendar"></i></a></li>
-            <li class="category razred" id="classes">
+            <li class="category razred" id="class">
                <a class="unselectable">RAZRED
                   <i class="fas fa-list"></i>
                </a>
@@ -68,3 +100,7 @@
 </body>
 
 </html>
+
+
+
+

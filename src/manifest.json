@@ -15,7 +15,7 @@
         {
             "matches": ["*://ocjene.skole.hr/*"],
             "js": ["./browser-polyfill.js","./main.js"],
-            "css": ["./css/sidebar.css","./css/courses.css","./css/notes.css","./css/animations_effects.css"],
+            "css": ["./css/sidebar.css","./css/courses.css","./css/notes.css","./css/animations_effects.css", "./css/classes.css"],
             "run_at": "document_start",
             "exclude_matches": [
                 "*://ocjene.skole.hr/login"
@@ -36,11 +36,11 @@
         "/fonts/*.woff2"
     ],
     "icons": {
-        "96": "./icons/icon.svg"
+        "96": "/icons/icon.svg"
     },
     "browser_action": {
         "default_icon": "icons/icon32.png",
-        "default_title": "e-dnevnik#"
-       
+        "default_title": "e-dnevnik#",
+        "default_popup": "/popup/panel.html"
       }
   }
