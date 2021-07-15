@@ -16,7 +16,7 @@ let page_end = document.location.href.substr(document.location.href.lastIndexOf(
 let username_data = "Unkown";
 
 
-const loading_screen = async () => {
+const loading_screen = async () => {    
     
     const response = await fetch(browser.runtime.getURL("html/loading.html"));
     const html = await response.text(); 
@@ -501,6 +501,11 @@ const load_schedule = () => {
                     while (brs.length > 0) {
                         for (const br of brs)
                             br.remove()
+                    }
+             
+                    if(!text.innerText.trim().length){
+                        text.appendChild(document.createElement('br'));
+                        console.log(text.innerText.trim().length)
                     }
                     if (table_rows[i].classList.contains('header')) {
                         text.classList.add('table-header')
