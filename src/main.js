@@ -16,12 +16,12 @@ let page_end = document.location.href.substr(document.location.href.lastIndexOf(
 let username_data = "Unkown";
 
 
-const loading_screen = async () => {    
-    
+const loading_screen = async () => {
+
     const response = await fetch(browser.runtime.getURL("html/loading.html"));
-    const html = await response.text(); 
+    const html = await response.text();
     document.body.innerHTML = html;
-    
+
     const i = document.getElementsByClassName("custom-logo")[0];
     let icon = browser.runtime.getURL("icons/icon2.svg");
     i.setAttribute('src', icon + " ")
@@ -67,6 +67,10 @@ const loading_data = async () => {
     const classes = await fetch_page("https://ocjene.skole.hr/class");
     data.set("classes", classes);
 
+    /* behavior */
+    const behavior = await fetch_page("https://ocjene.skole.hr/behavior");
+    data.set("behavior", behavior);
+
 
 
     console.log("loaded data");
@@ -85,12 +89,12 @@ const main_html = async () => {
     document.head.innerHTML = parsed.head.innerHTML
     document.body.innerHTML = parsed.body.innerHTML;
 
-    
+
 
     load_sidebar();
     console.log("loaded main");
     document.getElementsByTagName("html")[0].style.display = "block";
-   
+
 
 }
 
@@ -195,6 +199,9 @@ const set_content = async (page) => {
             break;
         case "class":
             load_class();
+            break;
+        case "behavior":
+            load_behavior();
             break;
         case "logout":
             document.location.href = "/logout"
@@ -417,22 +424,27 @@ const get_courses = async () => {
         new_course.classList.add("unselectable")
         new_course.setAttribute("id", name)
 
+        const course_info = document.createElement('div');
+        course_info.classList.add("course-info")
         const name_el = document.createElement("span");
-        name_el.setAttribute("class", "name");
+        name_el.classList.add("name");
         name_el.innerText = name;
         const teacher = document.createElement("span");
-        teacher.setAttribute("class", "teacher")
+        teacher.classList.add("teacher")
         teacher.innerText = teachers_string;
 
         const final_grade = document.createElement("span");
-        final_grade.setAttribute("class", "final-grade")
+        final_grade.classList.add("final-grade")
 
         const grades_html = await fetch_page(browser.runtime.getURL("html/grades.html"))
 
 
-        new_course.appendChild(name_el)
-        new_course.appendChild(teacher)
-        new_course.appendChild(final_grade)
+        course_info.appendChild(name_el)
+        course_info.appendChild(teacher)
+        course_info.appendChild(final_grade)
+
+
+        new_course.appendChild(course_info)
         new_course.appendChild(grades_html.body.firstElementChild)
         load_grades(new_course);
         courses_list.appendChild(new_course)
@@ -502,8 +514,8 @@ const load_schedule = () => {
                         for (const br of brs)
                             br.remove()
                     }
-             
-                    if(!text.innerText.trim().length){
+
+                    if (!text.innerText.trim().length) {
                         text.appendChild(document.createElement('br'));
                         console.log(text.innerText.trim().length)
                     }
@@ -566,27 +578,66 @@ const load_schedule = () => {
     display.appendChild(button_row)
     display_schedule();
 
-    
+
     display.appendChild(table)
 
 
 }
 
-const load_class = () =>{
+const load_class = () => {
     const display = document.getElementById("display");
     const orignal = data.get("classes");
     display.innerHTML = "";
     display.appendChild(document.createElement("div"))
-    display.firstElementChild.setAttribute('id','classes-container')
-    for(const class_info of orignal.getElementsByClassName('class-info')){
+    display.firstElementChild.setAttribute('id', 'classes-container')
+    for (const class_info of orignal.getElementsByClassName('class-info')) {
         const class_template = document.querySelector('#class-template').content.cloneNode(true);
         class_template.firstElementChild.firstElementChild.href = class_info.firstElementChild.href
-        class_template.firstElementChild.firstElementChild.innerText = class_info.firstElementChild.firstElementChild.innerText +  class_info.firstElementChild.lastElementChild.innerText
+        class_template.firstElementChild.firstElementChild.innerText = class_info.firstElementChild.firstElementChild.innerText + class_info.firstElementChild.lastElementChild.innerText
         class_template.firstElementChild.lastElementChild.lastElementChild.innerText = class_info.getElementsByClassName("overall-grade")[0].lastElementChild.innerText
-        
-        for(const link of class_template.querySelector('.shortcuts').children){
-            link.firstElementChild.href = class_info.firstElementChild.href.substr(0,class_info.firstElementChild.href.lastIndexOf('/')) + link.firstElementChild.href.substr(link.firstElementChild.href.lastIndexOf('/'))
+
+        for (const link of class_template.querySelector('.shortcuts').children) {
+            link.firstElementChild.href = class_info.firstElementChild.href.substr(0, class_info.firstElementChild.href.lastIndexOf('/')) + link.firstElementChild.href.substr(link.firstElementChild.href.lastIndexOf('/'))
         }
         display.firstElementChild.appendChild(class_template)
     }
+}
+
+
+const load_behavior = async () => {
+    const display = document.getElementById("display");
+    const orignal = data.get("behavior");
+
+    display.innerHTML = "";
+    const container = document.createElement('div');
+    container.classList.add('content')
+    container.innerHTML = orignal.querySelector(".content").innerHTML
+    for (const child of container.children) {
+        console.log(child)
+        if (child.classList.contains('table-container')) {
+            container.removeChild(child);
+            const table = document.createElement('div');
+            table.classList.add('table')
+            for (const row of child.children) {
+                const new_row = document.createElement('div');
+                new_row.classList.add('table-row')
+                for(const cell of row.children){
+                    const new_cell = document.createElement('div');
+                    if (row.classList.contains('header')) {
+                        new_cell.classList.add('table-header')
+                        new_cell.innerText = cell.innerText
+                    }else
+                        new_cell.innerHTML = cell.innerHTML
+                    
+                    new_row.appendChild(new_cell)
+                }
+                table.appendChild(new_row);
+            }
+
+            container.appendChild(table);
+        }
+    }
+
+    display.appendChild(container);
+
 }

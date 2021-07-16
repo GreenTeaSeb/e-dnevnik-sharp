@@ -1,7 +1,7 @@
-.content div{
+.content div:not(.table div){
     animation: coursesload 0.2s, fadein 0.6s;
     margin: 1rem;
-    
+    font-weight: normal !important;
 }
 
 #display .schedule{
@@ -44,21 +44,34 @@
 .content .section-text{
      background-color: var(--primary-dark);;
      border: none;
-     padding: 2rem;
-     font-size: 1.2rem;
-     line-height: 200%;
+     padding: 1rem;
+     font-size: 1em;
+     line-height: 200%; 
 
 }
 
 .content a{
     margin: 1rem;
-
-    font-size: 1.2rem;
+    font-size: 1em;
 }
 
+.content a:hover{
+    color: var(--text-highlight);
+}
 
 .content .title{
     color: var(--text-highlight);
-    font-weight: bolder;
+    font-weight: normal;
+    font-size: 1em !important;
+    text-transform: uppercase;
 }
 
+.content .table{
+    padding: 1rem;
+    background: var(--primary);
+    border-radius: 0.5rem;
+}
+
+.content span{
+    font-weight: normal !important;
+}

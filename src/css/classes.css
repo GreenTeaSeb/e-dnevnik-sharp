@@ -6,12 +6,14 @@
     width: 20rem;
     padding: 1rem;
     transition: 0.3s;
+    border-top: 0.5rem solid var(--text-highlight,#f7768e);
 }
 .class-year:hover{
     background-color: var(--primary-light);
     transition: 0.3s;
     transform: scale(1.1);
 }
+
 
 .class-year a{
     text-decoration: none;

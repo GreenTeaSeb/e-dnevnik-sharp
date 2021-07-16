@@ -16,12 +16,12 @@
 
 
 *{
-    font-family: 'Roboto', sans-serif;
+   /* font-family: 'Roboto', sans-serif;*/
 }
 
 body{
     background-color: var(--background,#1a1b26) !important;
-    overflow-y: scroll !important;
+    overflow-y: auto !important;
     overflow-x: hidden !important;
 }
 
@@ -87,7 +87,7 @@ span {
     z-index: 1;
     background-color: var( --primary , #24283b);
     overflow-x: hidden;
-    border-radius: 0px 1rem 1rem 0px;
+    border-radius: 0px 0.5rem 0.5rem 0px;
     animation: fadein 0.2s;
 }
 
@@ -146,6 +146,7 @@ span {
 }
 .category:hover a{
     transform: scale(1.1);
+    transition: 0.3;
 }
 
 
@@ -157,8 +158,9 @@ span {
 }
 .active a{
     color:var(--text-highlight,#f7768e);
+    transform: scale(1.1);
     transition: 0.3s;
-    font-size: 1rem;
+    
 
 }
 
@@ -167,7 +169,6 @@ span {
 }
 .active:hover a{
     color: var(--text-highlight,#f7768e);
-    
     transition: 0.3s;
 }
 
