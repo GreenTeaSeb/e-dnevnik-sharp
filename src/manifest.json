@@ -23,7 +23,7 @@
         },
         {
             "matches": ["*://ocjene.skole.hr/login"],
-            "js": ["./login.js"],
+            "js": ["./browser-polyfill.js","./login.js"],
             "css": ["./css/login.css"],
             "run_at": "document_start"
         }
@@ -31,7 +31,8 @@
     "web_accessible_resources": [
         "/icons/*.png",
         "/icons/icon.svg",
-        "/icons/icon2.svg"
+        "/icons/icon2.svg",
+        "/html/*.html"
     ],
     "icons": {
         "96": "/icons/icon.svg"

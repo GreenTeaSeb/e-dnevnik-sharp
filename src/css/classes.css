@@ -48,7 +48,11 @@
 }
 
 .class-year .class-grade{
-    display: block ruby;
+    display: flex;
+    flex-direction: row;
+}
+.class-grade br{
+    display: none;
 }
 
 .class-year .class-grade span{

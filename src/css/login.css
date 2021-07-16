@@ -2,35 +2,120 @@
 
 :root {
     --background : #1a1b26;
-    --primary : #24283b;
-    --primary-hightlight:  #282c41;
-    --text-highlight: #f7768e;
+    --primary : rgb(47, 52, 77);
+
+    --primary-hightlight:  #1c1e29;
+    --text-highlight: #ff3c5eff;
     --text: #cfc9c2;
 }
 
 
-*{
-    font-family: 'Roboto', sans-serif;
-}
 
 
 body{
-    background-image: url('https://images.unsplash.com/photo-1423683249427-8ca22bd873e0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1953&q=80') !important; 
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    background-size: cover !important;
+    background-image: linear-gradient(to right top, #34061c, #2f0c22, #291126, #231528, #1e1828, #1a1a2a, #171c2a, #141e2a, #0d212b, #07232b, #032529, #052725);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    overflow: hidden;
 }
 
-div,#page-wrapper{
-    background-color: var(--primary) !important;
+*{
+    font-family: 'Ubuntu', sans-serif;
+}
+
+
+#container{
+    width: 25rem;
+	height: 27rem;
+	background-color: var(--background);
+	border-radius: 0.5rem;
+	position: absolute;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+
+    filter: drop-shadow(0 0 20px #0000009d);
+    display: flex;
+    flex-direction: column;
+    
+    padding: 2rem;
+    
+
+    
+}
+
+.form-login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+label{
+    display: none;
 }
 
 input{
-    background-color: var(--background);
-    border: none !important;
-    color: var(--text-highlight) !important;
+    margin: 0.5rem;
+    width: 20rem;
+    height: 3rem;
+    border-radius: 10px;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    font-size: 1em;
+    background: var(--primary-hightlight);
+    outline: none;
+    border: none;
+    font-weight: normal;
+    color: var(--text);
+    transition: 0.3s;
 }
 
-p,a,h4,span,label{
-    color: var(--text);
+input[type="submit"]:hover{
+    transform: scale(1.15);
+    transition: 0.3s;
+
+}
+input:focus{
+    font-size: 1.2em;
+}
+
+input[type="submit"]{
+    
+    font-weight: bolder;
+    height: 3rem;
+    width: 22rem;
+    background: var(--text-highlight) ;
+    color: white;
+    margin-top: 3rem;
+    filter: drop-shadow(0 0 4px #000000);
+}
+
+#logo{
+    width: 60%;
+    object-fit: contain;
+}
+
+#logo-container{
+    margin: -2rem -2rem 0 -2rem;
+    padding: 2rem;
+    display: grid;
+    place-items: center;
+
+}
+
+
+/* WEB KIT STUFF*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+  -webkit-box-shadow: 0 0 0 50px var(--primary-hightlight) inset;
+    transition: background-color 5000000s ease-in-out 0s;
+    -webkit-text-fill-color: var(--text);
+    font-size: 1em;
 }
