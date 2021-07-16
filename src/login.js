@@ -1,13 +1,23 @@
 document.querySelector('html').innerHTML = ""
 
+
 window.onload = () => {
+    const tab_icon = document.createElement("link");
+    tab_icon.rel = "shortcut icon"
+    tab_icon.href = browser.runtime.getURL("icons/icon32.png");
+    document.head.appendChild(tab_icon)
     load();
 }
 
-const load = async() =>{
+const load = async () => {
     const response = await fetch(browser.runtime.getURL("html/login.html"));
     const html = await response.text();
-    document.querySelector('html').innerHTML =  html;
+    document.querySelector('html').innerHTML = html;
+
+    for (let i = 0; i < 200; i++)
+        document.getElementById('bg').innerText += Math.random().toString(36);
+
+    document.getElementById('bg').classList.add('unselectable');
 
     const form = (await fetch_page("https://ocjene.skole.hr/login")).getElementsByClassName('form-login')[0]
     document.getElementById('container').appendChild(form)
@@ -16,8 +26,25 @@ const load = async() =>{
     let icon = browser.runtime.getURL("icons/icon2.svg");
     i.setAttribute('src', icon + " ");
 
-    document.querySelector(`input[name='username']`).setAttribute('placeholder','email');
-    document.querySelector(`input[name='password']`).setAttribute('placeholder','lozinka');
+    const username = document.querySelector(`input[name='username']`);
+    const password = document.querySelector(`input[name='password']`);
+
+
+
+    username.setAttribute('placeholder', 'email');
+    password.setAttribute('placeholder', 'lozinka');
+
+    document.querySelector(`input[type='submit']`).addEventListener('click', (event) => {
+        event.preventDefault();
+        
+        if(username.value && password.value){
+            document.getElementById('out').classList.toggle('circle')
+            setTimeout(()=>{
+                form.submit(); 
+            }, 500);
+            
+        }
+    });
 }
 
 

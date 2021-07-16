@@ -20,9 +20,9 @@
 }
 
 body{
-    background-color: var(--background,#1a1b26) !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
+    background-color: var(--background) !important;
+    overflow-y: hidden ;
+    overflow-x: hidden ;
 }
 
 span {
@@ -36,10 +36,13 @@ span {
 }
 
 #loading-page{
+    height: 100vh;
     margin: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    animation: fadein 0.2s;
 }
 
 #loading-page .custom-logo{
@@ -51,6 +54,7 @@ span {
     color: var(--text);
     font-size: 2rem;
     animation: fadein 0.5s;
+    font-family: ubuntu;
 }
 
 #content{

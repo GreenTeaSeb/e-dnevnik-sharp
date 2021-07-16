@@ -1,11 +1,12 @@
-/*
-TODO: login screen, switch html head at login as well
 
-*/
 
-document.getElementsByTagName("html")[0].style.display = "none";
+document.querySelector("html").innerHTML = "";
 
 window.onload = () => {
+    const tab_icon = document.createElement("link");
+    tab_icon.rel = "shortcut icon"
+    tab_icon.href = browser.runtime.getURL("icons/icon32.png");
+    document.head.appendChild(tab_icon)
     loading_screen()
 }
 
@@ -20,17 +21,13 @@ const loading_screen = async () => {
 
     const response = await fetch(browser.runtime.getURL("html/loading.html"));
     const html = await response.text();
-    document.body.innerHTML = html;
+    document.querySelector("html").innerHTML = html;
 
     const i = document.getElementsByClassName("custom-logo")[0];
     let icon = browser.runtime.getURL("icons/icon2.svg");
     i.setAttribute('src', icon + " ")
 
-    const tab_icon = document.createElement("link");
-    tab_icon.rel = "shortcut icon"
-    tab_icon.href = browser.runtime.getURL("icons/icon32.png");
-    document.head.appendChild(tab_icon)
-
+    
     document.getElementsByTagName("html")[0].style.display = "block";
     loading_data();
     console.log("loading screen");
@@ -86,10 +83,9 @@ const main_html = async () => {
     const html = await response.text();
     const parsed = new DOMParser().parseFromString(html, 'text/html');
 
-    document.head.innerHTML = parsed.head.innerHTML
-    document.body.innerHTML = parsed.body.innerHTML;
+    document.getElementsByTagName("html")[0].innerHTML = html
 
-
+    document.body.style.overflowY = 'auto';
 
     load_sidebar();
     console.log("loaded main");
