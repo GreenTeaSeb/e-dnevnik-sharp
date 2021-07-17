@@ -15,7 +15,7 @@ const load = async () => {
     document.querySelector('html').innerHTML = html;
 
     for (let i = 0; i < 200; i++)
-        document.getElementById('bg').innerText += Math.random().toString(36);
+        document.getElementById('bg').textContent += Math.random().toString(36);
 
     document.getElementById('bg').classList.add('unselectable');
 

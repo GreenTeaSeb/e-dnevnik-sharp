@@ -117,6 +117,7 @@ const load_sidebar = async () => {
         })
     }
 
+    console.log(document.getElementById('sidemenu'))
     const search_input = document.getElementById('search-input');
     search_input.addEventListener("keyup", search);
 

@@ -48,6 +48,7 @@ body{
     font-family: mazeletter;
     line-height: 4vh;
     word-wrap: break-word;
+
 }
 
 #container{
@@ -76,16 +77,16 @@ body{
     height: 1vh;
 	background-color: var(--background);
 	border-radius: 50%;
-	position: absolute;
-	top:0;
+	position: sticky;
+	top:50%;
 	bottom: 0;
-	left: 0;
+	left: 50%;
 	right: 0;
 	margin: auto;
     z-index: 3;
     transform: scale(300);
     animation: enlarge 0.3s ease-in;
-  }
+}
 
 .form-login{
     display: flex;

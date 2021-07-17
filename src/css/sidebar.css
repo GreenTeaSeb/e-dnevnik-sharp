@@ -12,6 +12,8 @@
     
     --text-highlight: #f7768e;
     --text: #cfc9c2;
+
+    --sidemenu-width: 15rem;
 }
 
 
@@ -58,7 +60,7 @@ span {
 }
 
 #content{
-    margin-left: 15.5rem;
+    margin-left: calc( var(--sidemenu-width) + 0.5rem);
     color: var(--text,#cfc9c2);
 }
 
@@ -76,37 +78,43 @@ span {
     justify-content: center;
     margin-bottom: 1rem;
     /*background-color:  var(--primary-dark); */
-    box-shadow: 0px 12px 12px -10px rgba(0, 0, 0, 0.2)
+    box-shadow: 0px 12px 12px  rgba(0, 0, 0, 0.2)
 }
 
 .custom-logo{
-    width: 80%;
+    width: 10rem;
     object-fit: contain;
 }
-
+    
 #sidemenu{
-    width: 15rem;
-    height: 100vh;
+    width: var(--sidemenu-width);
+    min-width: 5rem;
+
+    height: 100%;
     position: fixed;
     z-index: 1;
     background-color: var( --primary , #24283b);
     overflow-x: hidden;
-    border-radius: 0px 0.5rem 0.5rem 0px;
+    border-radius: 0px 10px 10px 0px;
     animation: fadein 0.2s;
+    resize: horizontal;
+    display: flex;
+    flex-direction: column;
+
+    box-shadow: 10px 0 10px 0px rgba(0, 0, 0, 0.2)
 }
 
 #categories-list{
-    width: 15rem;
-    height: 100vh;
-    position: fixed;
-
+    width: inherit;
+    min-width: inherit;
+    max-width: inherit;
+    height: 100%;
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-   
-    
+    overflow:hidden;
 }
 
 #categories{
@@ -121,6 +129,7 @@ span {
     font-size: 0.9rem;
     text-decoration: none;
     transition: 0.3s;
+
 }
 
 .category a{
@@ -132,6 +141,7 @@ span {
     transition: 0.1s;
     border-radius: 0px 0.2rem 0.2rem 0px;
     animation: categoryload 0.3s ;
+
     /*
     margin-left: 0.2rem ;
     margin-right: 0.2rem ;
@@ -139,9 +149,8 @@ span {
     */
 }
 
-.category:last-child{
+.category:last-child{   
     margin-top: auto;
-    margin-bottom: 100px;
 }
 
 .category:hover  {
@@ -150,6 +159,7 @@ span {
 }
 .category:hover a{
     transform: scale(1.1);
+    transform-origin: left;
     transition: 0.3;
 }
 
@@ -158,14 +168,13 @@ span {
     background-color:var(--primary-light, #282c41);
     border-left: 0.5rem solid var(--text-highlight,#f7768e);
     transition: 0.3s;
-    
+
 }
 .active a{
     color:var(--text-highlight,#f7768e);
     transform: scale(1.1);
+    transform-origin: left;
     transition: 0.3s;
-    
-
 }
 
 .active:hover {
