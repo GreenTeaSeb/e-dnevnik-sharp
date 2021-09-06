@@ -32,7 +32,7 @@
 
 }
 
-.class-year li a, .class-year li:last-child{
+.class-year li a{
     padding: 1rem 1rem 1rem 0;
 }
 
@@ -50,6 +50,7 @@
 .class-year .class-grade{
     display: flex;
     flex-direction: row;
+    margin: 1rem 0rem 1rem 0rem;
 }
 .class-grade br{
     display: none;
