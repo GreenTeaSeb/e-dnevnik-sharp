@@ -23,11 +23,11 @@ const loading_screen = async () => {
     const html = await response.text();
     document.querySelector("html").innerHTML = html;
 
-    const i = document.getElementsByClassName("custom-logo")[0];
+    const i = document.querySelector(".custom-logo")
     let icon = browser.runtime.getURL("icons/icon2.svg");
     i.setAttribute('src', icon + " ")
 
-    
+
     document.getElementsByTagName("html")[0].style.display = "block";
     loading_data();
     console.log("loading screen");
@@ -38,21 +38,23 @@ const loading_data = async () => {
     /* courses */
 
     const courses = await fetch_page("https://ocjene.skole.hr/course");
-    data.set("courses", courses)
 
-    const list = courses.getElementsByClassName('list')[0].children
-    username_data = courses.getElementsByClassName("user-name")[0].firstElementChild.innerText;
-    /* grades of each course */
-    for (const course of list) {
-        const name = course.firstElementChild.firstElementChild.innerText;
-        const link_to_grades = course.firstElementChild.href;
-        const grades_page = await fetch_page(link_to_grades);
-        data.set(name, grades_page);
+    data.set("course", courses)
+    if (courses.querySelector('.list') !== null) {
+        const list = courses.querySelector('.list').children
+
+        username_data = courses.querySelector(".user-name").firstElementChild.innerText;
+        /* grades of each course */
+
+        for (const course of list) {
+            const name = course.firstElementChild.firstElementChild.innerText;
+            const link_to_grades = course.firstElementChild.href;
+            const grades_page = await fetch_page(link_to_grades);
+            data.set(name, grades_page);
+        }
     }
 
-
-
-    /* courses */
+    /* note */
     const notes = await fetch_page("https://ocjene.skole.hr/notes");
     data.set("notes", notes);
 
@@ -97,7 +99,7 @@ const main_html = async () => {
 
 const load_sidebar = async () => {
     // LOGO
-    const i = document.getElementsByClassName("custom-logo")[0];
+    const i = document.querySelector(".custom-logo");
     const username = document.getElementById("username");
     username.firstElementChild.innerText = username_data;
     let icon = browser.runtime.getURL("icons/icon2.svg");
@@ -117,7 +119,6 @@ const load_sidebar = async () => {
         })
     }
 
-    console.log(document.getElementById('sidemenu'))
     const search_input = document.getElementById('search-input');
     search_input.addEventListener("keyup", search);
 
@@ -183,30 +184,43 @@ const set_active = () => {
 
 
 const set_content = async (page) => {
-    page_end = page;
-    switch (page) {
-        case "course":
-            get_courses();
-            break;
-        case "notes":
-            get_notes();
-            break;
-        case "schedule":
-            load_schedule();
-            break;
-        case "class":
-            load_class();
-            break;
-        case "behavior":
-            load_behavior();
-            break;
-        case "logout":
-            document.location.href = "/logout"
-            break;
-        default:
-            const content = document.getElementById('display');
-            content.innerHTML = ""
-            break;
+    page_end = page;    
+    try {
+        switch (page) {
+            case "course":
+                await get_courses();
+                break;
+            case "notes":
+               await get_notes();
+                break;
+            case "schedule":
+                load_schedule();
+                break;
+            case "class":
+                load_class();
+                break;
+            case "behavior":
+               await load_behavior();
+                break;
+            case "exam":{
+                load_exams();
+                break;
+            }
+            case "absent":{
+                load_absent();
+                break;
+            }
+            case "logout":
+                document.location.href = "/logout"
+                break;
+            default:
+                const content = document.getElementById('display');
+                content.innerHTML = ""
+                break;
+        }
+    } catch (error) {
+        console.log("missing data catch")
+        load_missing_data();
     }
 }
 
@@ -254,8 +268,6 @@ const get_average_grade = async (id) => {
 
 }
 
-
-
 const display_average = async (subject_id) => {
 
     const grade = await get_average_grade(subject_id);
@@ -295,8 +307,13 @@ const display_average = async (subject_id) => {
             this.classList.toggle("active-course")
 
             if (!this.classList.contains('active-course')) {
-                this.classList.remove('expanded')
-                notes.style.display = "none";
+                if (this.classList.contains('expanded')) {
+                    this.classList.remove('expanded')
+                    setTimeout(function () {
+                        subject.scrollIntoView({ behavior: "smooth", block: "center", inline: "start" });
+
+                    }, 300)
+                } notes.style.display = "none";
                 for (c of cur) {
                     c.style.display = "block"
                 }
@@ -305,7 +322,7 @@ const display_average = async (subject_id) => {
             } else {
                 setTimeout(function () {
                     subject.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
-                }, 0)
+                })
             }
             this.lastElementChild.classList.toggle("active-grades");
 
@@ -332,14 +349,17 @@ const display_average = async (subject_id) => {
             for (c of cur) {
                 c.style.display = "block"
                 notes.style.display = "none"
-                subject.scrollIntoView({ behavior: "smooth", block: "start", inline: "start" });
+
+                setTimeout(function () {
+                    subject.scrollIntoView({ behavior: "smooth", block: "center", inline: "start" });
+
+                }, 300)
             }
 
 
     })
 
 }
-
 
 const load_grades = (course) => {
     const table = course.lastElementChild.firstElementChild;
@@ -399,14 +419,18 @@ const load_grades = (course) => {
     }
 }
 
-
 const get_courses = async () => {
-
+    
     const display = document.getElementById("display");
     const courses = await fetch_page(browser.runtime.getURL("html/courses.html"))
-    const orignal = data.get("courses");
+    const orignal = data.get("course");
 
-    const list = orignal.getElementsByClassName('list')[0].children
+
+    let list = orignal.querySelector('.list')
+    if (list === null)
+        throw 'missing courses'
+    else
+        list = list.children;
     display.innerHTML = courses.body.innerHTML;
     const courses_list = document.getElementById("courses-list")
 
@@ -457,7 +481,7 @@ const get_notes = async () => {
     const display = document.getElementById("display");
     const orignal = data.get("notes");
 
-    display.innerHTML = orignal.getElementsByClassName("content-wrapper")[0].innerHTML;
+    display.innerHTML = orignal.querySelector(".content-wrapper").innerHTML;
 }
 
 
@@ -514,7 +538,6 @@ const load_schedule = () => {
 
                     if (!text.innerText.trim().length) {
                         text.appendChild(document.createElement('br'));
-                        console.log(text.innerText.trim().length)
                     }
                     if (table_rows[i].classList.contains('header')) {
                         text.classList.add('table-header')
@@ -610,7 +633,6 @@ const load_behavior = async () => {
     container.classList.add('content')
     container.innerHTML = orignal.querySelector(".content").innerHTML
     for (const child of container.children) {
-        console.log(child)
         if (child.classList.contains('table-container')) {
             container.removeChild(child);
             const table = document.createElement('div');
@@ -618,14 +640,14 @@ const load_behavior = async () => {
             for (const row of child.children) {
                 const new_row = document.createElement('div');
                 new_row.classList.add('table-row')
-                for(const cell of row.children){
+                for (const cell of row.children) {
                     const new_cell = document.createElement('div');
                     if (row.classList.contains('header')) {
                         new_cell.classList.add('table-header')
                         new_cell.innerText = cell.innerText
-                    }else
+                    } else
                         new_cell.innerHTML = cell.innerHTML
-                    
+
                     new_row.appendChild(new_cell)
                 }
                 table.appendChild(new_row);
@@ -637,4 +659,10 @@ const load_behavior = async () => {
 
     display.appendChild(container);
 
+}
+
+const load_missing_data = async () => {
+    const display = document.getElementById("display");
+    const template = document.querySelector('#missing-data-template')
+    display.innerHTML = template.innerHTML;
 }
