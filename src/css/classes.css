@@ -32,7 +32,7 @@
 
 }
 
-.class-year li{
+.class-year li a, .class-year li:last-child{
     padding: 1rem 1rem 1rem 0;
 }
 
@@ -43,7 +43,7 @@
 }
 
 
-.class-year li:hover a{
+.class-year li a:hover{
     color: var(--text-highlight);
 }
 
