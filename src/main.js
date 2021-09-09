@@ -40,10 +40,9 @@ const loading_data = async () => {
     const courses = await fetch_page("https://ocjene.skole.hr/course");
 
     data.set("course", courses)
+    username_data = courses.querySelector(".user-name").firstElementChild.innerText;
     if (courses.querySelector('.list') !== null) {
         const list = courses.querySelector('.list').children
-
-        username_data = courses.querySelector(".user-name").firstElementChild.innerText;
         /* grades of each course */
 
         for (const course of list) {
@@ -182,7 +181,6 @@ const set_active = () => {
     }
 }
 
-
 const set_content = async (page) => {
     page_end = page;    
     try {
@@ -242,13 +240,13 @@ const get_average_grade = async (id) => {
     const course_page = data.get(id);
     const sub = document.getElementById(id);
 
-    var final_grade = course_page.getElementsByClassName("final-grade");
+    var final_grade = course_page.querySelector(".final-grade")
     try {
-        if (final_grade[0].lastElementChild.innerHTML == "") {
-
+        if (!final_grade.lastElementChild.innerHTML) {
+            
             var grades_table = course_page.getElementsByClassName("grade");
             var average = 0;
-            var cur_num_of_grades = 0;
+            var cur_num_of_grades = 0;                                                             
 
             for (const grade of grades_table) {
                 if (grade.children.length > 0) { //get all of the grade slots
@@ -258,16 +256,18 @@ const get_average_grade = async (id) => {
                     }
                 }
             }
-
+            if(!average)
+                throw '0';
             return Math.round(average * 100) / 100
-        }
-        return final_grade[0].lastElementChild.innerHTML;
+   
+        }                                                                                              
+        return final_grade.lastElementChild.innerHTML;
     } catch (error) {
         return "nezaključeno"
     }
-
+                    
 }
-
+     
 const display_average = async (subject_id) => {
 
     const grade = await get_average_grade(subject_id);
@@ -547,27 +547,17 @@ const load_schedule = () => {
                     text.classList.add('unselectable')
                     rows_list[i].appendChild(text);
 
-                } else {
-                    /*
-                    const text = document.createElement('div');
-                    if (table_rows[i]) {
-                        
-                        if (table_rows[i].children.length < 2) { // header
-                            text.innerText = table_rows[i].innerText
-    
-                        } else {
-                            for (const row of table_rows[i].children) {
-                                text.innerText = row.innerText;
-                            }
-                        }
-                        
-                    }
-                    rows_list[i].appendChild(text);
-                    */
-                }
+                } 
 
             }
-
+            const text = document.createElement('div');
+            text.innerText = i-1;
+            text.classList.add('class-number')
+            if(!i){
+                text.classList.add('table-header')
+                text.innerText = "Sat"
+            }
+            rows_list[i].prepend(text);
             table.appendChild(rows_list[i])
         }
         search();

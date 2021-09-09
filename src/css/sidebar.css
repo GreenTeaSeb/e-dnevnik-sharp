@@ -17,9 +17,7 @@
 }
 
 
-*{
-   /* font-family: 'Roboto', sans-serif;*/
-}
+
 
 body{
     background-color: var(--background) !important;
