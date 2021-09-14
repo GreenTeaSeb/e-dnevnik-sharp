@@ -3,7 +3,7 @@
 :root {
     --background : #1a1b26;
     --primary : rgb(47, 52, 77);
-
+    --loading : #1a1b26;
     --primary-hightlight:  #1c1e29;
     --text-highlight: #ff3c5eff;
     --text: #cfc9c2;
@@ -75,7 +75,7 @@ body{
 .circle{
     width: 1vh;
     height: 1vh;
-	background-color: var(--background);
+	background-color: var(--loading);
 	border-radius: 50%;
 	position: sticky;
 	top:50%;

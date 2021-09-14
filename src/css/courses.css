@@ -20,6 +20,7 @@
 
 #info{
     margin: 5rem;
+    display: none;
 }
 
 .course{
@@ -52,13 +53,15 @@
 }
 
 .final-grade{
-    color: var(--text-highlight);
+    color: var(--text);
     margin-left: auto;
     float: right;
 }
 
 .confirmed .final-grade{
     font-weight: bolder;
+    color: var(--text-highlight);
+
 }
 
 

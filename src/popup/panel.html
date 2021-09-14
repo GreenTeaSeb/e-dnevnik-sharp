@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../panel.js"></script>
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
+
 <body style="display: flex; flex-direction: column;">
-    <input type="checkbox" checked="true" name="ext enabled" id="ext-enabled">
-    <input type="color" name="Primary color" id="primary">
-    <input type="color" name="Text color" id="text">
-    <input type="color" name="Highlight color" id="highlight">
+    <div id="content">
+        <div id="logo">
+            <img src="../icons/icon2.png" alt="" srcset="">
+        </div>
+        <div id = "options">
+            <input type="text" name="background color" id="background-color" placeholder="background hex code"
+                maxlength="6">
+            <input type="text" name="primary color" id="primary-color" placeholder=" primary hex code" maxlength="6">
+        </div>
+    </div>
 </body>
+
 </html>

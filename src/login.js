@@ -1,5 +1,10 @@
 document.querySelector('html').innerHTML = ""
 
+load_storage("background").then(res => {
+    if (res)
+        document.documentElement.style.setProperty("--loading", '#' + res)
+})
+
 
 window.onload = () => {
     const tab_icon = document.createElement("link");
@@ -36,13 +41,13 @@ const load = async () => {
 
     document.querySelector(`input[type='submit']`).addEventListener('click', (event) => {
         event.preventDefault();
-        
-        if(username.value && password.value){
+
+        if (username.value && password.value) {
             document.getElementById('out').classList.toggle('circle')
-            setTimeout(()=>{
-                form.submit(); 
+            setTimeout(() => {
+                form.submit();
             }, 500);
-            
+
         }
     });
 }
@@ -58,4 +63,13 @@ const fetch_html = async (link) => {
 const fetch_page = async (page) => {
     const html = await fetch_html(page)
     return new DOMParser().parseFromString(html, 'text/html');
+}
+
+function load_storage(key) {
+    return new Promise(resolve => {
+        browser.storage.local.get(key, (result) => {
+            resolve(result[key]);
+        });
+    }
+    )
 }

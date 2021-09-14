@@ -1,30 +1,46 @@
 {
-
     "manifest_version": 2,
     "name": "e-dnevnik sharp",
     "version": "1.0",
-  
     "description": "Bolji e-dnevnik",
-    "background":{
-        "scripts":[
+    "background": {
+        "scripts": [
             "./browser-polyfill.js"
         ]
     },
-
     "content_scripts": [
         {
-            "matches": ["*://ocjene.skole.hr/*"],
-            "js": ["./browser-polyfill.js","./main.js"],
-            "css": ["./css/sidebar.css","./css/courses.css","./css/notes.css","./css/animations_effects.css", "./css/classes.css"],
+            "matches": [
+                "*://ocjene.skole.hr/*"
+            ],
+            "js": [
+                "./browser-polyfill.js",
+                "./main.js",
+                "./message.js"
+            ],
+            "css": [
+                "./css/sidebar.css",
+                "./css/courses.css",
+                "./css/notes.css",
+                "./css/animations_effects.css",
+                "./css/classes.css"
+            ],
             "run_at": "document_start",
             "exclude_matches": [
                 "*://ocjene.skole.hr/login"
             ]
         },
         {
-            "matches": ["*://ocjene.skole.hr/login"],
-            "js": ["./browser-polyfill.js","./login.js"],
-            "css": ["./css/login.css"],
+            "matches": [
+                "*://ocjene.skole.hr/login"
+            ],
+            "js": [
+                "./browser-polyfill.js",
+                "./login.js"
+            ],
+            "css": [
+                "./css/login.css"
+            ],
             "run_at": "document_start"
         }
     ],
@@ -41,5 +57,8 @@
         "default_icon": "icons/icon32.png",
         "default_title": "e-dnevnik#",
         "default_popup": "/popup/panel.html"
-      }
-  }
+    },
+    "permissions": [
+        "storage"
+    ]
+}

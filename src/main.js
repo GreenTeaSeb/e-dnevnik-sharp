@@ -554,7 +554,7 @@ const load_schedule = () => {
             text.innerText = i-1;
             text.classList.add('class-number')
             if(!i){
-                text.classList.add('table-header')
+                text.classList.add('table-header', 'unselectable')
                 text.innerText = "Sat"
             }
             rows_list[i].prepend(text);
