@@ -32,7 +32,7 @@ span {
     color: var(--text);
 }
 
-.fa-list{
+.fas:not(.fa-user){
     float: left;
     padding-left: 30px;
     padding-right: 20px;
@@ -63,6 +63,7 @@ span {
 #content{
     margin-left: calc( var(--sidemenu-width) + 0.5rem);
     color: var(--text,#cfc9c2);
+    transition: margin-left 0.3s;
 }
 
 .logo-link{
@@ -73,19 +74,45 @@ span {
 }
 
 #logo{
-    padding: 1em;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 1rem;
-    /*background-color:  var(--primary-dark); */
-   /* box-shadow: 0px 12px 12px  rgba(0, 0, 0, 0.2)*/
+    min-height: 5rem;
+    max-height: 5rem;
+    
 }
 
-.custom-logo{
-    width: 10rem;
-    object-fit: contain;
+#logo:hover .custom-logo-small{
+    transform: rotate(45deg); 
+    transition: 0.3s;
 }
+
+#logo:hover .custom-logo{
+    transform: scale(1.1,1.1); 
+    transition: 0.3s;
+}
+
+
+.custom-logo{
+    width: 12rem;
+    transition: 0.3s;
+}
+
+:not(.collapsed) .custom-logo-small{
+    display: none;
+}
+
+.collapsed .custom-logo{
+    display: none;
+}
+.collapsed .custom-logo-small{
+    display: block;
+    width: 3rem;
+    transition: 0.3s;
+}
+
+
     
 #sidemenu{
     width: var(--sidemenu-width);
@@ -98,11 +125,11 @@ span {
     overflow-x: hidden;
     border-radius: 0px 10px 10px 0px;
     animation: fadein 0.2s;
-    resize: horizontal;
     display: flex;
     flex-direction: column;
-
-    box-shadow: 10px 0 10px 0px rgba(0, 0, 0, 0.2)
+    transition: 0.3s;
+    box-shadow: 10px 0 10px 0px rgba(0, 0, 0, 0.2);
+   
 }
 
 #categories-list{
@@ -125,7 +152,7 @@ span {
     
 }
 
-.category a, .content a{
+.category a, .content a, .category .fas{
     color: var( --text, #cfc9c2);
     font-size: 0.9rem;
     text-decoration: none;
@@ -142,7 +169,7 @@ span {
     transition: 0.1s;
     border-radius: 0px 0.2rem 0.2rem 0px;
     animation: categoryload 0.3s ;
-
+    white-space: nowrap;
     /*
     margin-left: 0.2rem ;
     margin-right: 0.2rem ;
@@ -151,42 +178,42 @@ span {
 }
 
 .category:last-child{   
-    margin-top: auto;
+    margin-top: auto; 
 }
 
 .category:hover  {
     background-color: var(--primary-light);
-    transition: 0.1s;
 }
 .category:hover a{
     transform: scale(1.1);
     transform-origin: left;
-    transition: 0.3;
 }
 
 
-.active, .category:active{
+#sidemenu:not(.collapsed) .active{
     background-color:var(--primary-light, #282c41);
     border-left: 0.5rem solid var(--text-highlight,#f7768e);
-    transition: 0.3s;
 
 }
-.active a{
+.active a, .active .fas{
     color:var(--text-highlight,#f7768e);
     transform: scale(1.1);
     transform-origin: left;
-    transition: 0.3s;
+   
 }
 
 .active:hover {
     background-color: var(--primary-light, #282c41);
 }
-.active:hover a{
+.active:hover a, .active:hover .fas{
     color: var(--text-highlight,#f7768e);
-    transition: 0.3s;
+
 }
 
-
+.collapsed .category a{
+    opacity: 0;
+    animation: fadeout 0.3s;
+}
 
 [class*=" icon-"]::before, [class^="icon-"]::before {
 	float: left;
@@ -268,7 +295,7 @@ span {
     justify-content: center;
 
     color: var(--text);
-    background-color: var(--primary-dark);
+    /* background-color: var(--primary-dark); */
     border-radius: 10px;
 
     transition: 0.3s;

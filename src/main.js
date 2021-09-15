@@ -97,12 +97,16 @@ const main_html = async () => {
 
 
 const load_sidebar = async () => {
+    const side_menu = document.getElementById("sidemenu");
     // LOGO
     const i = document.querySelector(".custom-logo");
+    const i2 = document.querySelector(".custom-logo-small");
     const username = document.getElementById("username");
     username.firstElementChild.innerText = username_data;
-    let icon = browser.runtime.getURL("icons/icon2.svg");
-    i.setAttribute('src', icon + " ")
+    let icon2 = browser.runtime.getURL("icons/icon2.svg");
+    let icon = browser.runtime.getURL("icons/icon.svg");
+    i.setAttribute('src', icon2 + " ")
+    i2.setAttribute('src',icon + " ");
     //CATEGORIES
 
     const categories = document.getElementsByClassName("category")
@@ -121,11 +125,35 @@ const load_sidebar = async () => {
     const search_input = document.getElementById('search-input');
     search_input.addEventListener("keyup", search);
 
+    const logo = document.getElementById("logo");
+
+
+    load_from_storage("collapsed-side").then(res => {
+        side_menu.classList.toggle("collapsed", res);
+        collapse_side();
+
+    })
+
+    logo.addEventListener("click", () => {
+        side_menu.classList.toggle("collapsed");
+        collapse_side();
+    })
+
     set_active();
     set_content(document.getElementsByClassName('active')[0].id);
-
 }
 
+const collapse_side = () => {
+    const side_menu = document.getElementById("sidemenu");
+    if (side_menu.classList.contains("collapsed")) {
+        document.documentElement.style.setProperty("--sidemenu-width", "5rem");
+        browser.storage.local.set({ "collapsed-side": true });
+    }
+    else {
+        document.documentElement.style.setProperty("--sidemenu-width", "15rem");
+        browser.storage.local.set({ "collapsed-side": false });
+    }
+}
 const search = () => {
     switch (page_end) {
         case "course":
@@ -182,14 +210,14 @@ const set_active = () => {
 }
 
 const set_content = async (page) => {
-    page_end = page;    
+    page_end = page;
     try {
         switch (page) {
             case "course":
                 await get_courses();
                 break;
             case "notes":
-               await get_notes();
+                await get_notes();
                 break;
             case "schedule":
                 load_schedule();
@@ -198,13 +226,13 @@ const set_content = async (page) => {
                 load_class();
                 break;
             case "behavior":
-               await load_behavior();
+                await load_behavior();
                 break;
-            case "exam":{
+            case "exam": {
                 load_exams();
                 break;
             }
-            case "absent":{
+            case "absent": {
                 load_absent();
                 break;
             }
@@ -243,10 +271,10 @@ const get_average_grade = async (id) => {
     var final_grade = course_page.querySelector(".final-grade")
     try {
         if (!final_grade.lastElementChild.innerHTML) {
-            
+
             var grades_table = course_page.getElementsByClassName("grade");
             var average = 0;
-            var cur_num_of_grades = 0;                                                             
+            var cur_num_of_grades = 0;
 
             for (const grade of grades_table) {
                 if (grade.children.length > 0) { //get all of the grade slots
@@ -256,18 +284,18 @@ const get_average_grade = async (id) => {
                     }
                 }
             }
-            if(!average)
+            if (!average)
                 throw '0';
             return Math.round(average * 100) / 100
-   
-        }                                                                                              
+
+        }
         return final_grade.lastElementChild.innerHTML;
     } catch (error) {
         return "nezaključeno"
     }
-                    
+
 }
-     
+
 const display_average = async (subject_id) => {
 
     const grade = await get_average_grade(subject_id);
@@ -420,7 +448,7 @@ const load_grades = (course) => {
 }
 
 const get_courses = async () => {
-    
+
     const display = document.getElementById("display");
     const courses = await fetch_page(browser.runtime.getURL("html/courses.html"))
     const orignal = data.get("course");
@@ -547,13 +575,13 @@ const load_schedule = () => {
                     text.classList.add('unselectable')
                     rows_list[i].appendChild(text);
 
-                } 
+                }
 
             }
             const text = document.createElement('div');
-            text.innerText = i-1;
+            text.innerText = i - 1;
             text.classList.add('class-number')
-            if(!i){
+            if (!i) {
                 text.classList.add('table-header', 'unselectable')
                 text.innerText = "Sat"
             }
@@ -655,4 +683,13 @@ const load_missing_data = async () => {
     const display = document.getElementById("display");
     const template = document.querySelector('#missing-data-template')
     display.innerHTML = template.innerHTML;
+}
+
+function load_from_storage(key) {
+    return new Promise(resolve => {
+        browser.storage.local.get(key, (result) => {
+            resolve(result[key]);
+        });
+    }
+    )
 }

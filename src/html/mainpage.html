@@ -14,10 +14,10 @@
    <meta name="msapplication-TileColor" content="#1b75bb">
    <meta name="theme-color" content="#ffffff">
 
-   
+
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- 
+
    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;1,100&display=swap" rel="stylesheet">
 
    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/solid.css"
@@ -31,27 +31,27 @@
          </a>
          <ul class="shortcuts">
             <li>
-               <a class="unselectable" href="/course">OCJENE<i class="icon-star-empty"></i></a>
+               <a class="unselectable" href="/course">OCJENE<i class="fas fa-star"></i></a>
             </li>
             <li>
-               <a class="unselectable" href="/notes">BILJEŠKE<i class="icon-edit"></i></a>
+               <a class="unselectable" href="/notes">BILJEŠKE<i class="fas fa-edit"></i></a>
             </li>
             <li>
-               <a class="unselectable" href="/exam">ISPITI<i class="icon-clone"></i></a>
+               <a class="unselectable" href="/exam">ISPITI<i class="fas fa-clock"></i></a>
             </li>
             <li>
-               <a class="unselectable" href="/absent" >IZOSTANCI<i class="icon-unlink"></i></a>
+               <a class="unselectable" href="/absent">IZOSTANCI<i class="fas fa-unlink"></i></a>
             </li>
             <li>
-               <a class="unselectable" href="/behavior"> VLADANJA<i class="icon-attention-circled"></i></a>
+               <a class="unselectable" href="/behavior"> VLADANJA<i class="fas fa-address-card"></i></a>
             </li>
             <li>
-               <a class="unselectable" href="/schedule">RASPORED<i class="icon-calendar"></i></a>
+               <a class="unselectable" href="/schedule">RASPORED<i class="fas fa-calendar"></i></a>
             </li>
          </ul>
-         <li class="class-grade unselectable"><i class="icon-graduation-cap"></i>OPĆI USPJEH
+         <li class="class-grade unselectable"><i class="fas fa-user-graduate"></i>OPĆI USPJEH
             <span class="unselectable">
-              ?
+               ?
             </span>
          </li>
       </div>
@@ -60,7 +60,7 @@
    <template id="table-template">
    </template>
 
-   <template id= "missing-data-template">
+   <template id="missing-data-template">
       <div>Whoops, izgleda da vam nisu uneseni podatci!</div>
    </template>
 
@@ -69,30 +69,58 @@
 <body>
    <div id="page">
       <div id="sidemenu">
-         <div id="logo"><img src="" class="custom-logo"></div>
+         <div id="logo"><img src="" class="custom-logo"><img src="" class="custom-logo-small"></div>
          <ul id="categories-list">
-            <li class="category ocjene" id="course"><a class="unselectable">OCJENE<i class="icon-star-empty"></i></a>
+            <li class="category ocjene" id="course">
+               <i class="fas fa-star"></i>
+               <a class="unselectable">OCJENE</a>
             </li>
-            <li class="category bilješke" id="notes"><a class="unselectable">BILJEŠKE<i class="icon-edit"></i></a></li>
-            <li class="category ispiti" id="exam"><a class="unselectable">ISPITI<i class="icon-clone"></i></a></li>
-            <li class="category izostanci" id="absent"><a class="unselectable">IZOSTANCI<i class="icon-unlink"></i></a>
+            <li class="category bilješke" id="notes">
+               <i class="fas fa-edit"></i>
+               <a class="unselectable">BILJEŠKE</a>
             </li>
-            <li class="category vladanja" id="behavior"><a class="unselectable">VLADANJA<i
-                     class="icon-attention-circled"></i></a></li>
-            <li class="category raspored" id="schedule"><a class="unselectable">RASPORED<i
-                     class="icon-calendar"></i></a></li>
-            <li class="category razred" id="class">
-               <a class="unselectable">RAZRED
-                  <i class="fas fa-list"></i>
+            <li class="category ispiti" id="exam">
+               <i class="fas fa-clock"></i>
+               <a class="unselectable">ISPITI
+               
                </a>
             </li>
-            <li class="category odjava" id="logout"><a class="unselectable">ODJAVA<i class="icon-logout"></i></a></li>
+            <li class="category izostanci" id="absent">
+               <i class="fas fa-unlink"></i>
+               <a class="unselectable">IZOSTANCI
+              
+               </a>
+            </li>
+            <li class="category vladanja" id="behavior">
+               <i class="fas fa-address-card"></i>
+               <a class="unselectable">VLADANJA
+                 
+               </a>
+            </li>
+            <li class="category raspored" id="schedule">
+               <i class="fas fa-calendar"></i>
+               <a class="unselectasle">RASPORED
+                  
+               </a>
+            </li>
+            <li class="category razred" id="class">
+               <i class="fas fa-list"></i>
+               <a class="unselectable">RAZRED
+               
+               </a>
+            </li>
+            <li class="category odjava" id="logout">
+               <i class="fas fa-sign-out-alt"></i>
+               <a class="unselectable">ODJAVA
+                  
+                  </a>
+               </li>
          </ul>
       </div>
       <div id="content">
          <div id="top-bar">
-            <div id="search-bar"><i class="fas fa-search"></i><input id="search-input"
-                  placeholder="pretraživanje"></div>
+            <div id="search-bar"><i class="fas fa-search"></i><input id="search-input" placeholder="pretraživanje">
+            </div>
             <div id="user">
                <i class="fas fa-user"></i>
 
@@ -108,7 +136,3 @@
 </body>
 
 </html>
-
-
-
-
