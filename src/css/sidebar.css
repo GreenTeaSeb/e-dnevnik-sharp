@@ -13,7 +13,7 @@
     --text-highlight: #ff3c5e;
     --text: #cfc9c2;
 
-    --sidemenu-width: 15rem;
+    --sidemenu-width: 17rem;
 }
 
 
@@ -83,6 +83,10 @@ span {
     
 }
 
+#logo object{
+    pointer-events: none;
+}
+
 #logo:hover .custom-logo-small{
     transform: rotate(45deg); 
     transition: 0.3s;
@@ -93,6 +97,9 @@ span {
     transition: 0.3s;
 }
 
+#logo object #path6110{
+    fill: aqua !important;
+}
 
 .custom-logo{
     width: 12rem;
@@ -102,7 +109,7 @@ span {
 :not(.collapsed) .custom-logo-small{
     display: none;
 }
-
+    
 .collapsed .custom-logo{
     display: none;
 }
@@ -110,6 +117,7 @@ span {
     display: block;
     width: 3rem;
     transition: 0.3s;
+    
 }
 
 
@@ -195,11 +203,14 @@ span {
     border-left: 0.5rem solid var(--text-highlight,#f7768e);
 
 }
+
 .active a, .active .fas{
     color:var(--text-highlight,#f7768e);
     transform: scale(1.1);
+}
+
+:not(.collapsed) .active a{
     transform-origin: left;
-   
 }
 
 .active:hover {

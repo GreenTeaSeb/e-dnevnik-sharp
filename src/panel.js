@@ -30,6 +30,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     })
 
+    document.getElementById("accent-color").addEventListener("input", (event) => {
+        browser.tabs.query({ currentWindow: true, active: true }, (tabs) => {
+            if (/^[0-9a-fA-F]{8}$|[0-9a-fA-F]{6}$|[0-9a-fA-F]{4}$|[0-9a-fA-F]{3}$/.test(event.target.value)){
+                browser.tabs.sendMessage(tabs[0].id, { "message": "accent", "data": event.target.value });
+                browser.storage.local.set({ "accent": event.target.value });       
+            }else{
+                browser.tabs.sendMessage(tabs[0].id, { "message": "accent", "data": "ff3c5e"});
+                browser.storage.local.set({ "accent": "ff3c5e" });
+            }
+        });
+    })
+
 
     load("background").then(res => {
         if (res){
@@ -42,6 +54,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (res){
             document.getElementById('primary-color').value = res;
             document.documentElement.style.setProperty("--primary", "#" + res);
+        }
+    })
+    load("accent").then(res => {
+        if (res){
+            document.getElementById('accent-color').value = res;
         }
     })
 

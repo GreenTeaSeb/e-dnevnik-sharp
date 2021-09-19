@@ -103,10 +103,21 @@ const load_sidebar = async () => {
     const i2 = document.querySelector(".custom-logo-small");
     const username = document.getElementById("username");
     username.firstElementChild.innerText = username_data;
-    let icon2 = browser.runtime.getURL("icons/icon2.svg");
-    let icon = browser.runtime.getURL("icons/icon.svg");
-    i.setAttribute('src', icon2 + " ")
-    i2.setAttribute('src',icon + " ");
+    const icon2 = browser.runtime.getURL("icons/icon2.svg");
+    const icon = browser.runtime.getURL("icons/icon.svg");
+    i.setAttribute('data', icon2)
+    i2.setAttribute('data', icon);
+
+    if (document.documentElement.style.getPropertyValue('--text-highlight')) {
+        i.addEventListener('load', () => {
+
+            i.contentDocument.getElementById('path6110').style.fill = document.documentElement.style.getPropertyValue('--text-highlight');
+        })
+        i2.addEventListener('load', () => {
+            i2.contentDocument.getElementById('path6110').style.fill = document.documentElement.style.getPropertyValue('--text-highlight');
+        })
+    }
+
     //CATEGORIES
 
     const categories = document.getElementsByClassName("category")
@@ -145,13 +156,15 @@ const load_sidebar = async () => {
 
 const collapse_side = () => {
     const side_menu = document.getElementById("sidemenu");
+
     if (side_menu.classList.contains("collapsed")) {
         document.documentElement.style.setProperty("--sidemenu-width", "5rem");
         browser.storage.local.set({ "collapsed-side": true });
     }
     else {
-        document.documentElement.style.setProperty("--sidemenu-width", "15rem");
+        document.documentElement.style.setProperty("--sidemenu-width", "17rem");
         browser.storage.local.set({ "collapsed-side": false });
+
     }
 }
 const search = () => {
@@ -240,8 +253,7 @@ const set_content = async (page) => {
                 document.location.href = "/logout"
                 break;
             default:
-                const content = document.getElementById('display');
-                content.innerHTML = ""
+                throw 'no such page'
                 break;
         }
     } catch (error) {
