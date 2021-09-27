@@ -14,40 +14,30 @@
     transform: scale(1.05);
     box-shadow: 0px 12px 20px black;
 }
-
-
 .class-year a{
     text-decoration: none;
     display: block;
     color: var(--text);
     font-weight: bolder;
 }
-
 .class-year .class-name{
     font-weight: bolder;
 }
-
 #classes-container{
     display: flex;
     flex-wrap: wrap;
-
 }
-
 .class-year li a{
     padding: 1rem 1rem 1rem 0;
 }
-
 .class-year ul{
     background: var(--primary-dark);
     border-radius: 0.5rem;
     padding: 1rem 0 1rem 0;
 }
-
-
 .class-year li a:hover{
     color: var(--text-highlight);
 }
-
 .class-year .class-grade{
     display: flex;
     flex-direction: row;
@@ -56,7 +46,6 @@
 .class-grade br{
     display: none;
 }
-
 .class-year .class-grade span{
     margin-left: 2em;
     color: var(--text-highlight);

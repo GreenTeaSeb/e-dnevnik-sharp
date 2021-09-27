@@ -58,6 +58,7 @@
         "default_popup": "/popup/panel.html"
     },
     "permissions": [
-        "storage"
+        "storage",
+        "tabs"
     ]
 }

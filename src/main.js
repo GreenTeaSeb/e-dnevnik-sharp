@@ -108,15 +108,14 @@ const load_sidebar = async () => {
     i.setAttribute('data', icon2)
     i2.setAttribute('data', icon);
 
-    if (document.documentElement.style.getPropertyValue('--text-highlight')) {
-        i.addEventListener('load', () => {
-
-            i.contentDocument.getElementById('path6110').style.fill = document.documentElement.style.getPropertyValue('--text-highlight');
-        })
-        i2.addEventListener('load', () => {
-            i2.contentDocument.getElementById('path6110').style.fill = document.documentElement.style.getPropertyValue('--text-highlight');
-        })
-    }
+    // if (document.documentElement.style.getPropertyValue('--text-highlight')) {
+    //     i.addEventListener('load', () => {
+    //         i.contentDocument.getElementById('path6110').style.fill = document.documentElement.style.getPropertyValue('--text-highlight');
+    //     })
+    //     i2.addEventListener('load', () => {
+    //         i2.contentDocument.getElementById('path6110').style.fill = document.documentElement.style.getPropertyValue('--text-highlight');
+    //     })
+    // }
 
     //CATEGORIES
 
@@ -139,14 +138,18 @@ const load_sidebar = async () => {
     const logo = document.getElementById("logo");
 
 
-    load_from_storage("collapsed-side").then(res => {
-        side_menu.classList.toggle("collapsed", res);
+    browser.storage.local.get("collapsed-side").then(res => {
+        side_menu.classList.toggle("collapsed", res["collapsed-side"]);
         collapse_side();
 
     })
 
     logo.addEventListener("click", () => {
         side_menu.classList.toggle("collapsed");
+        side_menu.classList.add("collapse-trans");
+        setTimeout(() => {
+            side_menu.classList.remove("collapse-trans");
+        }, 300);
         collapse_side();
     })
 
@@ -157,15 +160,17 @@ const load_sidebar = async () => {
 const collapse_side = () => {
     const side_menu = document.getElementById("sidemenu");
 
+
     if (side_menu.classList.contains("collapsed")) {
-        document.documentElement.style.setProperty("--sidemenu-width", "5rem");
+        document.documentElement.style.setProperty("--sidemenu-width", "6vh");
         browser.storage.local.set({ "collapsed-side": true });
     }
     else {
-        document.documentElement.style.setProperty("--sidemenu-width", "17rem");
+        document.documentElement.style.setProperty("--sidemenu-width", "20vh");
         browser.storage.local.set({ "collapsed-side": false });
 
     }
+
 }
 const search = () => {
     switch (page_end) {
@@ -199,7 +204,6 @@ const hide_and_search = (list) => {
 
 const highlight_and_search = (list) => {
     const search_term = document.getElementById('search-input').value.toUpperCase();
-
     for (course of list) {
         if (course.innerText.toUpperCase().indexOf(search_term) > -1) {
             course.classList.add("active-cell")
@@ -223,7 +227,6 @@ const set_active = () => {
 }
 
 const set_content = async (page) => {
-    page_end = page;
     try {
         switch (page) {
             case "course":
@@ -256,6 +259,7 @@ const set_content = async (page) => {
                 throw 'no such page'
                 break;
         }
+        page_end = page;
     } catch (error) {
         console.log("missing data catch")
         load_missing_data();
@@ -697,11 +701,3 @@ const load_missing_data = async () => {
     display.innerHTML = template.innerHTML;
 }
 
-function load_from_storage(key) {
-    return new Promise(resolve => {
-        browser.storage.local.get(key, (result) => {
-            resolve(result[key]);
-        });
-    }
-    )
-}

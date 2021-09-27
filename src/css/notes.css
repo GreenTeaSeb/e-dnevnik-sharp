@@ -3,7 +3,6 @@
     margin: 1rem;
     font-weight: normal !important;
 }
-
 #display .schedule{
     margin: 0rem 1rem 1rem 1rem;
     width: 100%;
@@ -13,7 +12,6 @@
     padding-top: 0.5rem !important;
     animation:  fadein 0.3s;
 }
-
 .table-selector{
     padding: 1rem 1rem 0.5rem 1rem;   
     transition: 0.3s;
@@ -33,45 +31,36 @@
     color: var(--text-highlight);
     transition: 0.3s;
 }
-
 .active-cell{
     background-color: var(--primary-light) !important;
     transition: 0.3s;
 }
-
-
-
 .content .section-text{
      background-color: var(--primary-dark);;
      border: none;
+     word-break: break-word;
      padding: 1rem;
      font-size: 1em;
      line-height: 200%; 
-
 }
-
 .content a{
     margin: 1rem;
     font-size: 1em;
 }
-
 .content a:hover{
     color: var(--text-highlight);
 }
-
 .content .title{
     color: var(--text-highlight);
     font-weight: normal;
     font-size: 1em !important;
     text-transform: uppercase;
 }
-
 .content .table{
     padding: 1rem;
     background: var(--primary);
     border-radius: 0.5rem;
 }
-
 .content span{
     font-weight: normal !important;
 }

@@ -1,3 +1,4 @@
+
 load("background").then(res => {
     if (res) {
         background_color(res)
@@ -42,7 +43,7 @@ browser.runtime.onMessage.addListener((req, sender, res) => {
 
 function load(key) {
     return new Promise(resolve => {
-        browser.storage.local.get(key, (result) => {
+        browser.storage.local.get(key).then((result) => {
             resolve(result[key]);
         });
     }
@@ -64,14 +65,13 @@ const accent_color = (color) => {
     color = color[0] == '#' ? color.substr(1) : color;
     document.documentElement.style.setProperty("--text-highlight", "#" + color)
 
-    const i = document.querySelector(".custom-logo")
-    const i2 = document.querySelector(".custom-logo-small")
-    if (i) {
-        i.contentDocument.getElementById('path6110').style.fill = "#" + color;
-    }
-    if (i2) {
-        i2.contentDocument.getElementById('path6110').style.fill = "#" + color;
-    }
+    const logo = document.querySelector(".custom-logo")
+    const logo_small = document.querySelector(".custom-logo-small")
+
+    console.log("changing logo color to ", color)
+    // logo.contentDocument.getElementById('path6110').style.fill = "#" + color;
+    // logo_small.contentDocument.getElementById('path6110').style.fill = "#" + color;
+
 
 }
 

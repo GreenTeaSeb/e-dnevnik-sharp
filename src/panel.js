@@ -1,7 +1,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("background-color").addEventListener("input", (event) => {
-        browser.tabs.query({ currentWindow: true, active: true }, (tabs) => {
+        browser.tabs.query({ currentWindow: true, active: true }).then( tabs => {
             if (/^[0-9a-fA-F]{8}$|[0-9a-fA-F]{6}$|[0-9a-fA-F]{4}$|[0-9a-fA-F]{3}$/.test(event.target.value)) {
                 browser.tabs.sendMessage(tabs[0].id, { "message": "background", "data": event.target.value });
                 browser.storage.local.set({ "background": event.target.value });
@@ -12,12 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.documentElement.style.setProperty("--background", "#1a1b26");
             }
 
-            
         });
+        
     })
 
     document.getElementById("primary-color").addEventListener("input", (event) => {
-        browser.tabs.query({ currentWindow: true, active: true }, (tabs) => {
+        browser.tabs.query({ currentWindow: true, active: true }).then( tabs => {
             if (/^[0-9a-fA-F]{8}$|[0-9a-fA-F]{6}$|[0-9a-fA-F]{4}$|[0-9a-fA-F]{3}$/.test(event.target.value)){
                 browser.tabs.sendMessage(tabs[0].id, { "message": "primary", "data": event.target.value });
                 browser.storage.local.set({ "primary": event.target.value });     
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     document.getElementById("accent-color").addEventListener("input", (event) => {
-        browser.tabs.query({ currentWindow: true, active: true }, (tabs) => {
+        browser.tabs.query({ currentWindow: true, active: true }).then( tabs => {
             if (/^[0-9a-fA-F]{8}$|[0-9a-fA-F]{6}$|[0-9a-fA-F]{4}$|[0-9a-fA-F]{3}$/.test(event.target.value)){
                 browser.tabs.sendMessage(tabs[0].id, { "message": "accent", "data": event.target.value });
                 browser.storage.local.set({ "accent": event.target.value });       
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function load(key) {
     return new Promise(resolve => {
-        browser.storage.local.get(key, (result) => {
+        browser.storage.local.get(key).then( (result) => {
             resolve(result[key]);
         });
     }
