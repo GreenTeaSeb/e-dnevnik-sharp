@@ -39,7 +39,7 @@ const loading_data = async () => {
 
     const courses = await fetch_page("https://ocjene.skole.hr/course");
 
-    data.set("course", courses)
+    data.set("course", courses.querySelector('.list'))
     username_data = courses.querySelector(".user-name").firstElementChild.innerText;
     if (courses.querySelector('.list') !== null) {
         const list = courses.querySelector('.list').children
@@ -73,6 +73,7 @@ const loading_data = async () => {
 
     console.log("loaded data");
 
+    console.log(data)
     main_html();
 }
 
@@ -470,7 +471,7 @@ const get_courses = async () => {
     const orignal = data.get("course");
 
 
-    let list = orignal.querySelector('.list')
+    let list = orignal
     if (list === null)
         throw 'missing courses'
     else
